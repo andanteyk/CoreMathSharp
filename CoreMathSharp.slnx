@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="CoreMathSharp.Benchmarks/CoreMathSharp.Benchmarks.csproj" />
+  <Project Path="CoreMathSharp.Tests/CoreMathSharp.Tests.csproj" />
+  <Project Path="CoreMathSharp/CoreMathSharp.csproj" />
+</Solution>
