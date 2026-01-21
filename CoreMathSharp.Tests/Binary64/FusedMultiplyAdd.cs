@@ -24,7 +24,7 @@ public class FusedMultiplyAdd
     {
         var rng = new Seiran(1, 1);
 
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 1024 * 1024; i++)
         {
             double x = StrictMath.UInt64BitsToDouble(rng.Next());
             double y = StrictMath.UInt64BitsToDouble(rng.Next());
@@ -33,7 +33,7 @@ public class FusedMultiplyAdd
             Assert.Equal(Math.FusedMultiplyAdd(x, y, z), StrictMath.FusedMultiplyAdd(x, y, z));
         }
 
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 1024 * 1024; i++)
         {
             double x = rng.NextSignedDouble();
             double y = rng.NextSignedDouble();

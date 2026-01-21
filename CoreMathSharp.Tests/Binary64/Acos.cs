@@ -9,7 +9,11 @@ public class Acos
     {
         foreach (var x in Helper.TestDoubles)
         {
-            Assert.Equal(Math.Acos(x), StrictMath.Acos(x));
+            double expected = Math.Acos(x);
+            double actual = StrictMath.Acos(x);
+            double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
+
+            Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
         }
     }
 

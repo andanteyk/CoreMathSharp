@@ -48,7 +48,7 @@ public static partial class StrictMath
 #if NET6_0_OR_GREATER
         return BitConverter.UInt32BitsToSingle(x);
 #else
-        return BitConverter.SingleToInt32Bits((int)x);
+        return BitConverter.Int32BitsToSingle((int)x);
 #endif
     }
 
@@ -158,4 +158,127 @@ public static partial class StrictMath
 #endif
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static float BitIncrement(float x)
+    {
+#if NETCOREAPP3_0_OR_GREATER
+        return MathF.BitIncrement(x);
+#else
+        uint bits = SingleToUInt32Bits(x);
+
+        if (((bits >> 23) & 0xff) == 0xff)
+        {
+            return bits == 0xff800000u ? float.MinValue : x;
+        }
+
+        if (bits == 1u << 31)
+        {
+            return float.Epsilon;
+        }
+
+        if (bits >= 1u << 31)
+        {
+            bits--;
+        }
+        else
+        {
+            bits++;
+        }
+
+        return UInt32BitsToSingle(bits);
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static float BitDecrement(float x)
+    {
+#if NETCOREAPP3_0_OR_GREATER
+        return MathF.BitDecrement(x);
+#else
+        uint bits = SingleToUInt32Bits(x);
+
+        if (((bits >> 23) & 0xff) == 0xff)
+        {
+            return bits == 0x7f800000u ? float.MaxValue : x;
+        }
+
+        if (bits == 0)
+        {
+            return -float.Epsilon;
+        }
+
+        if (bits >= 1u << 31)
+        {
+            bits++;
+        }
+        else
+        {
+            bits--;
+        }
+
+        return UInt32BitsToSingle(bits);
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static double BitIncrement(double x)
+    {
+#if NETCOREAPP3_0_OR_GREATER
+        return Math.BitIncrement(x);
+#else
+        ulong bits = DoubleToUInt64Bits(x);
+
+        if (((bits >> 52) & 0x7ff) == 0x7ff)
+        {
+            return bits == 0xfff00000_00000000ul ? double.MinValue : x;
+        }
+
+        if (bits == 1ul << 63)
+        {
+            return double.Epsilon;
+        }
+
+        if (bits >= 1ul << 63)
+        {
+            bits--;
+        }
+        else
+        {
+            bits++;
+        }
+
+        return UInt64BitsToDouble(bits);
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static double BitDecrement(double x)
+    {
+#if NETCOREAPP3_0_OR_GREATER
+        return Math.BitDecrement(x);
+#else
+        ulong bits = DoubleToUInt64Bits(x);
+
+        if (((bits >> 52) & 0x7ff) == 0x7ff)
+        {
+            return bits == 0x7ff00000_00000000ul ? double.MaxValue : x;
+        }
+
+        if (bits == 0)
+        {
+            return -double.Epsilon;
+        }
+
+        if (bits >= 1ul << 63)
+        {
+            bits++;
+        }
+        else
+        {
+            bits--;
+        }
+
+        return UInt64BitsToDouble(bits);
+#endif
+    }
 }
