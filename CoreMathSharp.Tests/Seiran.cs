@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace CoreMathSharp.Tests;
 
-public class Seiran
+public sealed class Seiran
 {
     private ulong State0, State1;
 
@@ -46,7 +46,7 @@ public class Seiran
 
     public ulong NextULong(ulong max)
     {
-        ulong hi = Math.BigMul(Next(), max, out ulong lo);
+        ulong hi = StrictMath.BigMul(Next(), max, out ulong lo);
 
         if (lo < max)
         {
@@ -54,7 +54,7 @@ public class Seiran
 
             while (lo < mod)
             {
-                hi = Math.BigMul(Next(), max, out lo);
+                hi = StrictMath.BigMul(Next(), max, out lo);
             }
         }
 
@@ -64,6 +64,11 @@ public class Seiran
     public double NextDouble()
     {
         return (Next() >> 11) * (1.0 / (1ul << 53));
+    }
+
+    public double NextSignedDouble()
+    {
+        return ((long)Next() >> 10) * (1.0 / (1ul << 53));
     }
 
     public float NextFloat()

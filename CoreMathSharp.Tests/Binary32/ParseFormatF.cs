@@ -1,7 +1,8 @@
 namespace CoreMathSharp.Tests;
 
-public class Helperf
+public class ParseFormatF
 {
+#if NET10_0_OR_GREATER
     [Fact]
     public void Parse()
     {
@@ -39,7 +40,7 @@ public class Helperf
     }
 
     [Fact]
-    public void ParseFormat()
+    public void ParseAndFormat()
     {
         var rng = new Seiran(1, 1);
 
@@ -58,4 +59,5 @@ public class Helperf
             Assert.Equal(expected, parsed);
         }
     }
+#endif
 }
