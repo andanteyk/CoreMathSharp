@@ -39,8 +39,6 @@ public class Acosh
     {
         string path = "../../../Binary64/acosh.txt";
 
-        StrictMath.Acosh(2.026702496432824);
-
         foreach (var line in File.ReadLines(path))
         {
             var parsed = line.Split('\t');

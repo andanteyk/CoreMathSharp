@@ -92,9 +92,20 @@ static inline double nextDoubleRange(double min, double max)
 	return (1.0 - r) * min + r * max;
 }
 
+static inline float nextFloat()
+{
+	return (next() >> 40) * (1.0f / (1 << 24));
+}
+
 static inline float nextSignedFloat()
 {
 	return ((int64_t)next() >> 39) * (1.0f / ((uint32_t)1 << 24));
+}
+
+static inline float nextFloatRange(float min, float max)
+{
+	float r = nextFloat();
+	return (1.0f - r) * min + r * max;
 }
 
 #define TEST_DOUBLES_LENGTH (13)
