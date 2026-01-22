@@ -21,8 +21,8 @@ public class CopySign
 
         for (int i = 0; i < 1024; i++)
         {
-            double x = StrictMath.UInt64BitsToDouble(rng.Next());
-            double y = StrictMath.UInt64BitsToDouble(rng.Next());
+            double x = Polyfill.UInt64BitsToDouble(rng.Next());
+            double y = Polyfill.UInt64BitsToDouble(rng.Next());
 
             Assert.Equal(Math.CopySign(x, y), StrictMath.CopySign(x, y));
         }

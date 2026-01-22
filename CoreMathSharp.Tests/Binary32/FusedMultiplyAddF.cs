@@ -26,9 +26,9 @@ public class FusedMultiplyAddF
 
         for (int i = 0; i < 1024 * 1024; i++)
         {
-            float x = StrictMath.UInt32BitsToSingle((uint)rng.Next());
-            float y = StrictMath.UInt32BitsToSingle((uint)rng.Next());
-            float z = StrictMath.UInt32BitsToSingle((uint)rng.Next());
+            float x = Polyfill.UInt32BitsToSingle((uint)rng.Next());
+            float y = Polyfill.UInt32BitsToSingle((uint)rng.Next());
+            float z = Polyfill.UInt32BitsToSingle((uint)rng.Next());
 
             Assert.Equal(MathF.FusedMultiplyAdd(x, y, z), StrictMathF.FusedMultiplyAdd(x, y, z));
         }
@@ -52,10 +52,10 @@ public class FusedMultiplyAddF
         {
             var parsed = line.Split('\t');
 
-            float x = StrictMath.UInt32BitsToSingle(uint.Parse(parsed[0], NumberStyles.HexNumber));
-            float y = StrictMath.UInt32BitsToSingle(uint.Parse(parsed[1], NumberStyles.HexNumber));
-            float z = StrictMath.UInt32BitsToSingle(uint.Parse(parsed[2], NumberStyles.HexNumber));
-            float a = StrictMath.UInt32BitsToSingle(uint.Parse(parsed[3], NumberStyles.HexNumber));
+            float x = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[0], NumberStyles.HexNumber));
+            float y = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[1], NumberStyles.HexNumber));
+            float z = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[2], NumberStyles.HexNumber));
+            float a = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[3], NumberStyles.HexNumber));
 
             float actual = StrictMathF.FusedMultiplyAdd(x, y, z);
             Assert.Equal(a, actual);

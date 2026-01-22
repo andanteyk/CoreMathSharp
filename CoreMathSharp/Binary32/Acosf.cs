@@ -11,7 +11,7 @@ public static partial class StrictMathF
         {
             float pih = 3.1415927410125732f, pil = -5.9604644775390625e-08f;
 
-            uint t = StrictMath.SingleToUInt32Bits(x);
+            uint t = Polyfill.SingleToUInt32Bits(x);
             if (t == 0x7fu << 23)
             {
                 return 0.0f;
@@ -55,7 +55,7 @@ public static partial class StrictMathF
         ReadOnlySpan<double> o = [0.0, 3.1415926535897931];
         double xs = x;
         double r;
-        uint t = StrictMath.SingleToUInt32Bits(x);
+        uint t = Polyfill.SingleToUInt32Bits(x);
         uint ax = t << 1;
 
         if (ax >= 0x7fu << 24)

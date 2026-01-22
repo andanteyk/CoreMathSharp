@@ -26,9 +26,9 @@ public class FusedMultiplyAdd
 
         for (int i = 0; i < 1024 * 1024; i++)
         {
-            double x = StrictMath.UInt64BitsToDouble(rng.Next());
-            double y = StrictMath.UInt64BitsToDouble(rng.Next());
-            double z = StrictMath.UInt64BitsToDouble(rng.Next());
+            double x = Polyfill.UInt64BitsToDouble(rng.Next());
+            double y = Polyfill.UInt64BitsToDouble(rng.Next());
+            double z = Polyfill.UInt64BitsToDouble(rng.Next());
 
             Assert.Equal(Math.FusedMultiplyAdd(x, y, z), StrictMath.FusedMultiplyAdd(x, y, z));
         }
@@ -52,10 +52,10 @@ public class FusedMultiplyAdd
         {
             var parsed = line.Split('\t');
 
-            double x = StrictMath.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
-            double y = StrictMath.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
-            double z = StrictMath.UInt64BitsToDouble(ulong.Parse(parsed[2], NumberStyles.HexNumber));
-            double a = StrictMath.UInt64BitsToDouble(ulong.Parse(parsed[3], NumberStyles.HexNumber));
+            double x = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
+            double y = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
+            double z = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[2], NumberStyles.HexNumber));
+            double a = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[3], NumberStyles.HexNumber));
 
             double actual = StrictMath.FusedMultiplyAdd(x, y, z);
             Assert.Equal(a, actual);

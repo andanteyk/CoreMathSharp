@@ -110,7 +110,7 @@ public static partial class StrictMathF
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static double RoundToOdd(double value, double errorTerm)
         {
-            ulong bits = StrictMath.DoubleToUInt64Bits(value);
+            ulong bits = Polyfill.DoubleToUInt64Bits(value);
 
             if (errorTerm != 0.0 && (bits & 1) == 0)
             {
@@ -124,7 +124,7 @@ public static partial class StrictMathF
                 }
             }
 
-            return StrictMath.UInt64BitsToDouble(bits);
+            return Polyfill.UInt64BitsToDouble(bits);
         }
 
         double product = (double)x * (double)y;

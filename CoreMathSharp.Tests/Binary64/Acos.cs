@@ -43,8 +43,8 @@ public class Acos
         {
             var parsed = line.Split('\t');
 
-            double x = StrictMath.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
-            double a = StrictMath.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
+            double x = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
+            double a = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
 
             double actual = StrictMath.Acos(x);
             Assert.Equal(a, actual);

@@ -43,8 +43,8 @@ public class AcosF
         {
             var parsed = line.Split('\t');
 
-            float x = StrictMath.UInt32BitsToSingle(uint.Parse(parsed[0], NumberStyles.HexNumber));
-            float a = StrictMath.UInt32BitsToSingle(uint.Parse(parsed[1], NumberStyles.HexNumber));
+            float x = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[0], NumberStyles.HexNumber));
+            float a = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[1], NumberStyles.HexNumber));
 
             float actual = StrictMathF.Acos(x);
             Assert.Equal(a, actual);

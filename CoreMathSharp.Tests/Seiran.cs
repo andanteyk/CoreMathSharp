@@ -46,7 +46,7 @@ public sealed class Seiran
 
     public ulong NextULong(ulong max)
     {
-        ulong hi = StrictMath.BigMul(Next(), max, out ulong lo);
+        ulong hi = Polyfill.BigMul(Next(), max, out ulong lo);
 
         if (lo < max)
         {
@@ -54,7 +54,7 @@ public sealed class Seiran
 
             while (lo < mod)
             {
-                hi = StrictMath.BigMul(Next(), max, out lo);
+                hi = Polyfill.BigMul(Next(), max, out lo);
             }
         }
 

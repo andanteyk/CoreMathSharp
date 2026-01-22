@@ -18,7 +18,7 @@ public class Abs
 
         for (int i = 0; i < 1024; i++)
         {
-            double x = StrictMath.UInt64BitsToDouble(rng.Next());
+            double x = Polyfill.UInt64BitsToDouble(rng.Next());
 
             Assert.Equal(Math.Abs(x), StrictMath.Abs(x));
         }

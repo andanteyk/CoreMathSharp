@@ -101,7 +101,7 @@ public static partial class StrictMath
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static double ZeroBottom27BitsOfMantissa(double x)
         {
-            return UInt64BitsToDouble(DoubleToUInt64Bits(x) & ~0x7ff_fffful);
+            return Polyfill.UInt64BitsToDouble(Polyfill.DoubleToUInt64Bits(x) & ~0x7ff_fffful);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -136,7 +136,7 @@ public static partial class StrictMath
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static double RoundToOdd(double value, double errorTerm)
         {
-            ulong bits = DoubleToUInt64Bits(value);
+            ulong bits = Polyfill.DoubleToUInt64Bits(value);
 
             if (errorTerm != 0.0 && (bits & 1) == 0)
             {
@@ -150,7 +150,7 @@ public static partial class StrictMath
                 }
             }
 
-            return UInt64BitsToDouble(bits);
+            return Polyfill.UInt64BitsToDouble(bits);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -163,7 +163,7 @@ public static partial class StrictMath
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static double Pow2(int exponent)
         {
-            return UInt64BitsToDouble((ulong)(exponent + 1023) << 52);
+            return Polyfill.UInt64BitsToDouble((ulong)(exponent + 1023) << 52);
         }
 
 

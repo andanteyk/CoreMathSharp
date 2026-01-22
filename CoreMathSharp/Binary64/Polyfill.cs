@@ -10,7 +10,7 @@ using System.Runtime.Intrinsics.X86;
 
 namespace CoreMathSharp;
 
-public static partial class StrictMath
+public static partial class Polyfill
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ulong DoubleToUInt64Bits(double x)

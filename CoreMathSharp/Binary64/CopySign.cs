@@ -15,9 +15,9 @@ public static partial class StrictMath
         }
 #endif
 
-        ulong magnitudeBits = DoubleToUInt64Bits(magnitude);
-        ulong signBits = DoubleToUInt64Bits(sign);
+        ulong magnitudeBits = Polyfill.DoubleToUInt64Bits(magnitude);
+        ulong signBits = Polyfill.DoubleToUInt64Bits(sign);
 
-        return UInt64BitsToDouble((magnitudeBits & ((1ul << 63) - 1)) | (signBits & (1ul << 63)));
+        return Polyfill.UInt64BitsToDouble((magnitudeBits & ((1ul << 63) - 1)) | (signBits & (1ul << 63)));
     }
 }

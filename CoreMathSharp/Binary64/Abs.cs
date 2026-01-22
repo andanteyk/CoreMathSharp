@@ -11,10 +11,10 @@ public static partial class StrictMath
 #if NETCOREAPP3_0_OR_GREATER
         if (Vector128.IsHardwareAccelerated)
         {
-            return Vector128.BitwiseAnd(Vector128.CreateScalarUnsafe(x), Vector128.CreateScalarUnsafe(UInt64BitsToDouble(~(1ul << 63)))).ToScalar();
+            return Vector128.BitwiseAnd(Vector128.CreateScalarUnsafe(x), Vector128.CreateScalarUnsafe(Polyfill.UInt64BitsToDouble(~(1ul << 63)))).ToScalar();
         }
 #endif
 
-        return UInt64BitsToDouble(DoubleToUInt64Bits(x) & ~(1ul << 63));
+        return Polyfill.UInt64BitsToDouble(Polyfill.DoubleToUInt64Bits(x) & ~(1ul << 63));
     }
 }
