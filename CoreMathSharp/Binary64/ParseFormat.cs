@@ -47,6 +47,10 @@ public static partial class StrictMath
 
         var matchPreDot = match.Groups["predot"].ValueSpan;
         var matchPostDot = match.Groups["postdot"].ValueSpan;
+        if (matchPostDot.Length > 13)
+        {
+            matchPostDot = matchPostDot[..13];
+        }
         ulong preDot = ulong.Parse(matchPreDot, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
         ulong postDot = matchPostDot.Length == 0 ? 0ul : ulong.Parse(matchPostDot, NumberStyles.HexNumber, CultureInfo.InvariantCulture);
         int shift = matchPostDot.Length * 4;
