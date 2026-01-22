@@ -86,6 +86,12 @@ static inline double nextSignedDouble()
 	return ((int64_t)next() >> 10) * (1.0 / ((uint64_t)1 << 53));
 }
 
+static inline double nextDoubleRange(double min, double max)
+{
+	double r = nextDouble();
+	return (1.0 - r) * min + r * max;
+}
+
 static inline float nextSignedFloat()
 {
 	return ((int64_t)next() >> 39) * (1.0f / ((uint32_t)1 << 24));

@@ -71,6 +71,12 @@ public sealed class Seiran
         return ((long)Next() >> 10) * (1.0 / (1ul << 53));
     }
 
+    public double NextDouble(double min, double max)
+    {
+        double r = NextDouble();
+        return (1.0 - r) * min + r * max;
+    }
+
     public float NextFloat()
     {
         return (Next() >> 40) * (1.0f / (1u << 24));
