@@ -1,0 +1,3 @@
+[submodule "c/core-math"]
+	path = c/core-math
+	url = https://gitlab.inria.fr/core-math/core-math.git
