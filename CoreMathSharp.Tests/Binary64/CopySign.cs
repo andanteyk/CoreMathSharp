@@ -19,7 +19,7 @@ public class CopySign
     {
         var rng = new Seiran(1, 1);
 
-        for (int i = 0; i < 1024; i++)
+        for (int i = 0; i < 1024 * 1024; i++)
         {
             double x = Polyfill.UInt64BitsToDouble(rng.Next());
             double y = Polyfill.UInt64BitsToDouble(rng.Next());
