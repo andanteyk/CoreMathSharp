@@ -1,5 +1,5 @@
 // how to compile:
-// clang -O2 acosf.c -o ./testvec -lm -march=native
+// clang -O2 acosf.c -o ./bin/testvec -lm -march=native
 
 #include "core-math/src/binary32/acos/acosf.c"
 #include "testvec.h"
