@@ -159,6 +159,26 @@ public static partial class Polyfill
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static long BigMul(long x, long y, out long lo)
+    {
+#if NET5_0_OR_GREATER
+        return Math.BigMul(x, y, out lo);
+#else
+#if NETCOREAPP3_0_OR_GREATER
+        if (ArmBase.Arm64.IsSupported)
+        {
+            lo = x * y;
+            return ArmBase.Arm64.MultiplyHigh(x, y);
+        }
+#endif
+
+        ulong hi = BigMul((ulong)x, (ulong)y, out ulong ulo);
+        lo = (long)ulo;
+        return (long)hi - ((x >> 63) & y) - ((y >> 63) & x);
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static float BitIncrement(float x)
     {
 #if NETCOREAPP3_0_OR_GREATER
