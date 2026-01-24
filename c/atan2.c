@@ -18,8 +18,8 @@ void printAtan2()
 
     for (int i = 0; i < ITERATION_LENGTH; i++)
     {
-        double x = nextSignedDouble();
-        double y = nextSignedDouble();
+        double x = toDouble(next());
+        double y = toDouble(next());
         printf("%016" PRIx64 "\t%016" PRIx64 "\t%016" PRIx64 "\n", toUint64(x), toUint64(y), toUint64(cr_atan2(y, x)));
     }
 }
