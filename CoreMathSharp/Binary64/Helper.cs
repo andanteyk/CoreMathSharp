@@ -19,7 +19,7 @@ public static partial class StrictMath
             return AdvSimd.RoundAwayFromZeroScalar(Vector64.CreateScalar(x)).ToScalar();
         }
 #endif
-        // TODO
+        // TODO: math-dependent
         return Math.Truncate(x + CopySign(0.49999999999999994, x));
     }
 }

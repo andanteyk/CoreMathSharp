@@ -1,5 +1,5 @@
 // how to compile:
-// clang -O2 fusedMultiplyAdd.c -o ./testvec -lm -march=native
+// clang -O2 fusedMultiplyAdd.c -o ./bin/testvec -lm -march=native
 
 #include "testvec.h"
 
