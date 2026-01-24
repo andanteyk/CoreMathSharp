@@ -12,6 +12,8 @@ public static partial class StrictMath
         public static Tint One => new Tint(0, 0x8000000000000000ul, 0, 1, 0);
         public static Tint Pi => new Tint(0xc4c6628b80dc1cd1, 0xc90fdaa22168c234, 0x29024e088a67cc74, 2, 0);
         public static Tint Pi2 => new Tint(0xc4c6628b80dc1cd1, 0xc90fdaa22168c234, 0x29024e088a67cc74, 1, 0);
+        public static Tint OneHalf => new Tint(0, 0x8000000000000000, 0, 0, 0);
+        public static Tint OneOverPi => new Tint(0xfc2757d1f534ddc0, 0xa2f9836e4e441529, 0xdb6295993c439042, -1, 0);
 
         public override string ToString()
         {
