@@ -11,7 +11,7 @@ namespace CoreMathSharp;
 public static partial class StrictMath
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    static double BuiltinRound(double x)
+    internal static double BuiltinRound(double x)
     {
 #if NETCOREAPP3_0_OR_GREATER
         if (AdvSimd.IsSupported)
