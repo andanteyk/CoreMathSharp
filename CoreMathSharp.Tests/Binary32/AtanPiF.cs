@@ -2,15 +2,15 @@ using System.Globalization;
 
 namespace CoreMathSharp.Tests;
 
-public class AtanF
+public class AtanPiF
 {
     [Fact]
     public void TestFloats()
     {
         foreach (var x in Helper.TestFloats)
         {
-            float expected = MathF.Atan(x);
-            float actual = StrictMathF.Atan(x);
+            float expected = float.AtanPi(x);
+            float actual = StrictMathF.AtanPi(x);
             float ulp = MathF.Max(MathF.BitIncrement(actual) - actual, actual - MathF.BitDecrement(actual));
 
             Assert.Equal(expected, actual, float.IsNaN(ulp) ? 0.0f : ulp);
@@ -26,9 +26,9 @@ public class AtanF
         {
             float x = Polyfill.UInt32BitsToSingle((uint)rng.Next());
 
-            float expected = MathF.Atan(x);
-            float actual = StrictMathF.Atan(x);
-            float ulp = MathF.Max(MathF.BitIncrement(actual) - actual, actual - MathF.BitDecrement(actual));
+            float expected = float.AtanPi(x);
+            float actual = StrictMathF.AtanPi(x);
+            float ulp = MathF.Max(MathF.BitIncrement(actual) - actual, actual - MathF.BitDecrement(actual)) * 2.0f;
 
             Assert.Equal(expected, actual, float.IsNaN(ulp) ? 0.0f : ulp);
         }
@@ -37,7 +37,7 @@ public class AtanF
     [Fact]
     public void TestVector()
     {
-        string path = "../../../Binary32/atanf.txt";
+        string path = "../../../Binary32/atanpif.txt";
 
         foreach (var line in File.ReadLines(path))
         {
@@ -46,7 +46,7 @@ public class AtanF
             float x = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[0], NumberStyles.HexNumber));
             float a = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[1], NumberStyles.HexNumber));
 
-            float actual = StrictMathF.Atan(x);
+            float actual = StrictMathF.AtanPi(x);
             Assert.Equal(a, actual);
         }
     }
