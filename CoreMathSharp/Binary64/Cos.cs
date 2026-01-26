@@ -3,6 +3,97 @@ using System.Runtime.CompilerServices;
 
 namespace CoreMathSharp;
 
+internal readonly record struct Uint128(ulong lo, ulong hi)
+{
+    public static Uint128 Zero => new Uint128(0, 0);
+    public static Uint128 One => new Uint128(1, 0);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int Cmpu128(Uint128 a, Uint128 b)
+    {
+        int gt = a.hi > b.hi ? 1 : a.hi < b.hi ? 0 : a.lo > b.lo ? 1 : 0;
+        int lt = a.hi < b.hi ? 1 : a.hi > b.hi ? 0 : a.lo < b.lo ? 1 : 0;
+        return gt - lt;
+    }
+
+    public static Uint128 operator +(Uint128 a, Uint128 b)
+    {
+        ulong lo = a.lo + b.lo;
+        ulong carry = lo < a.lo ? 1ul : 0ul;
+        ulong hi = a.hi + b.hi + carry;
+        return new Uint128(lo, hi);
+    }
+    public static Uint128 operator -(Uint128 a, Uint128 b)
+    {
+        ulong lo = a.lo - b.lo;
+        ulong borrow = lo > a.lo ? 1ul : 0ul;
+        ulong hi = a.hi - b.hi - borrow;
+        return new Uint128(lo, hi);
+    }
+    public static Uint128 operator *(Uint128 a, ulong b)
+    {
+        ulong lohi = Polyfill.BigMul(a.lo, b, out ulong lolo);
+        ulong hilo = a.hi * b;
+        return new Uint128(lolo, lohi + hilo);
+    }
+    public static Uint128 operator *(ulong a, Uint128 b)
+        => b * a;
+
+    public static Uint128 operator |(Uint128 a, Uint128 b)
+    {
+        return new Uint128(a.lo | b.lo, a.hi | b.hi);
+    }
+
+    public static Uint128 operator <<(Uint128 a, int k)
+    {
+        // assumes 0 <= k < 128
+        if (k == 0)
+        {
+            return a;
+        }
+        else if (k < 64)
+        {
+            return new Uint128(a.lo << k, a.hi << k | a.lo >> -k);
+        }
+        else
+        {
+            return new Uint128(0, a.lo << k);
+        }
+    }
+
+    public static Uint128 operator >>(Uint128 a, int k)
+    {
+        // assumes 0 <= k < 128
+        if (k == 0)
+        {
+            return a;
+        }
+        else if (k < 64)
+        {
+            return new Uint128(a.lo >> k | a.hi << -k, a.hi >> k);
+        }
+        else
+        {
+            return new Uint128(a.hi >> k, 0);
+        }
+    }
+
+    public static bool operator <(Uint128 a, Uint128 b)
+    {
+        return a.hi < b.hi || (a.hi <= b.hi && a.lo < b.lo);
+    }
+    public static bool operator >(Uint128 a, Uint128 b)
+    {
+        return a.hi > b.hi || (a.hi >= b.hi && a.lo > b.lo);
+    }
+
+    public static implicit operator Uint128(ulong a)
+    {
+        return new Uint128(a, 0);
+    }
+}
+
+
 public static partial class StrictMath
 {
     private readonly record struct Dint(ulong lo, ulong hi, long ex, ulong sgn)
@@ -410,97 +501,6 @@ public static partial class StrictMath
             return (new Dint(lo, xhi, ex, sgn).Normalize(), i);
         }
     }
-
-    private readonly record struct Uint128(ulong lo, ulong hi)
-    {
-        public static Uint128 Zero => new Uint128(0, 0);
-        public static Uint128 One => new Uint128(1, 0);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Cmpu128(Uint128 a, Uint128 b)
-        {
-            int gt = a.hi > b.hi ? 1 : a.hi < b.hi ? 0 : a.lo > b.lo ? 1 : 0;
-            int lt = a.hi < b.hi ? 1 : a.hi > b.hi ? 0 : a.lo < b.lo ? 1 : 0;
-            return gt - lt;
-        }
-
-        public static Uint128 operator +(Uint128 a, Uint128 b)
-        {
-            ulong lo = a.lo + b.lo;
-            ulong carry = lo < a.lo ? 1ul : 0ul;
-            ulong hi = a.hi + b.hi + carry;
-            return new Uint128(lo, hi);
-        }
-        public static Uint128 operator -(Uint128 a, Uint128 b)
-        {
-            ulong lo = a.lo - b.lo;
-            ulong borrow = lo > a.lo ? 1ul : 0ul;
-            ulong hi = a.hi - b.hi - borrow;
-            return new Uint128(lo, hi);
-        }
-        public static Uint128 operator *(Uint128 a, ulong b)
-        {
-            ulong lohi = Polyfill.BigMul(a.lo, b, out ulong lolo);
-            ulong hilo = a.hi * b;
-            return new Uint128(lolo, lohi + hilo);
-        }
-        public static Uint128 operator *(ulong a, Uint128 b)
-            => b * a;
-
-        public static Uint128 operator |(Uint128 a, Uint128 b)
-        {
-            return new Uint128(a.lo | b.lo, a.hi | b.hi);
-        }
-
-        public static Uint128 operator <<(Uint128 a, int k)
-        {
-            // assumes 0 <= k < 128
-            if (k == 0)
-            {
-                return a;
-            }
-            else if (k < 64)
-            {
-                return new Uint128(a.lo << k, a.hi << k | a.lo >> -k);
-            }
-            else
-            {
-                return new Uint128(0, a.lo << k);
-            }
-        }
-
-        public static Uint128 operator >>(Uint128 a, int k)
-        {
-            // assumes 0 <= k < 128
-            if (k == 0)
-            {
-                return a;
-            }
-            else if (k < 64)
-            {
-                return new Uint128(a.lo >> k | a.hi << -k, a.hi >> k);
-            }
-            else
-            {
-                return new Uint128(a.hi >> k, 0);
-            }
-        }
-
-        public static bool operator <(Uint128 a, Uint128 b)
-        {
-            return a.hi < b.hi || (a.hi <= b.hi && a.lo < b.lo);
-        }
-        public static bool operator >(Uint128 a, Uint128 b)
-        {
-            return a.hi > b.hi || (a.hi >= b.hi && a.lo > b.lo);
-        }
-
-        public static implicit operator Uint128(ulong a)
-        {
-            return new Uint128(a, 0);
-        }
-    }
-
 
 
 
