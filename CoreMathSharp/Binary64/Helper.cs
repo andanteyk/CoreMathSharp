@@ -24,6 +24,13 @@ public static partial class StrictMath
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static double BuiltinFloor(double x)
+    {
+        // TODO: math-dependent
+        return Math.Floor(x);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static double Truncate(double x)
     {
         // TODO: math-dependent

@@ -2,15 +2,15 @@ using System.Globalization;
 
 namespace CoreMathSharp.Tests;
 
-public class Cbrt
+public class Cos
 {
     [Fact]
     public void TestDoubles()
     {
         foreach (var x in Helper.TestDoubles)
         {
-            double expected = Math.Cbrt(x);
-            double actual = StrictMath.Cbrt(x);
+            double expected = Math.Cos(x);
+            double actual = StrictMath.Cos(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -24,11 +24,22 @@ public class Cbrt
 
         for (int i = 0; i < 1024 * 1024; i++)
         {
+            double x = rng.NextDouble(-Math.PI, Math.PI);
+
+            double expected = Math.Cos(x);
+            double actual = StrictMath.Cos(x);
+            double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
+
+            Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
+        }
+
+        for (int i = 0; i < 1024 * 1024; i++)
+        {
             double x = Polyfill.UInt64BitsToDouble(rng.Next());
 
-            double expected = Math.Cbrt(x);
-            double actual = StrictMath.Cbrt(x);
-            double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual)) * 2.0;
+            double expected = Math.Cos(x);
+            double actual = StrictMath.Cos(x);
+            double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
         }
@@ -37,7 +48,7 @@ public class Cbrt
     [Fact]
     public void TestVector()
     {
-        string path = "../../../Binary64/cbrt.txt";
+        string path = "../../../Binary64/cos.txt";
 
         foreach (var line in File.ReadLines(path))
         {
@@ -46,7 +57,7 @@ public class Cbrt
             double x = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
             double a = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
 
-            double actual = StrictMath.Cbrt(x);
+            double actual = StrictMath.Cos(x);
             Assert.Equal(a, actual);
         }
     }
