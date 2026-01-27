@@ -2,10 +2,10 @@ using System.Globalization;
 
 namespace CoreMathSharp.Tests;
 
-public class ErfF
+public class ErfcF
 {
     // https://www.johndcook.com/blog/2009/01/19/stand-alone-error-function-erf/
-    static float EasyErf(float x)
+    static float EasyErfc(float x)
     {
         const double a1 = 0.254829592;
         const double a2 = -0.284496736;
@@ -19,7 +19,7 @@ public class ErfF
 
         double t = 1.0 / (1.0 + p * x);
         double y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.Exp(-x * x);
-        return (float)(sign * y);
+        return (float)(1.0 - sign * y);
     }
 
 
@@ -31,7 +31,7 @@ public class ErfF
     {
         foreach (var x in Helper.TestFloats)
         {
-            float expected = EasyErf(x);
+            float expected = EasyErfc(x);
             float actual = StrictMathF.Erf(x);
             float ulp = MathF.Max(MathF.BitIncrement(actual) - actual, actual - MathF.BitDecrement(actual));
 
@@ -49,8 +49,8 @@ public class ErfF
         {
             float x = rng.NextFloat(-4.0f, 4.0f);
 
-            float expected = EasyErf(x);
-            float actual = StrictMathF.Erf(x);
+            float expected = EasyErfc(x);
+            float actual = StrictMathF.Erfc(x);
             float torelance = 1.0e-6f;
 
             Assert.Equal(expected, actual, torelance);
@@ -60,7 +60,7 @@ public class ErfF
     [Fact]
     public void TestVector()
     {
-        string path = "../../../Binary32/erff.txt";
+        string path = "../../../Binary32/erfcf.txt";
 
         foreach (var line in File.ReadLines(path))
         {
@@ -69,7 +69,7 @@ public class ErfF
             float x = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[0], NumberStyles.HexNumber));
             float a = Polyfill.UInt32BitsToSingle(uint.Parse(parsed[1], NumberStyles.HexNumber));
 
-            float actual = StrictMathF.Erf(x);
+            float actual = StrictMathF.Erfc(x);
             Assert.Equal(a, actual);
         }
     }
