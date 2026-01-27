@@ -2,19 +2,19 @@ using System.Globalization;
 
 namespace CoreMathSharp.Tests;
 
-public class Erf
+public class Erfc
 {
 
     /*
-    // dotnet currently does not have an implementation of the Erf(), so there is no way to test it.
+    // dotnet currently does not have an implementation of the Erfc(), so there is no way to test it.
     // Since there is no simple and accurate implementation, we will rely on C-generated tests.
     [Fact]
     public void TestDoubles()
     {
         foreach (var x in Helper.TestDoubles)
         {
-            double expected = EasyErf(x);
-            double actual = StrictMath.Erf(x);
+            double expected = EasyErfc(x);
+            double actual = StrictMath.Erfc(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -32,8 +32,8 @@ public class Erf
         {
             double x = rng.NextDouble(-Math.PI, Math.PI);
 
-            double expected = EasyErf(x);
-            double actual = StrictMath.Erf(x);
+            double expected = EasyErfc(x);
+            double actual = StrictMath.Erfc(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -43,8 +43,8 @@ public class Erf
         {
             double x = Polyfill.UInt64BitsToDouble(rng.Next());
 
-            double expected = EasyErf(x);
-            double actual = StrictMath.Erf(x);
+            double expected = EasyErfc(x);
+            double actual = StrictMath.Erfc(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -55,7 +55,9 @@ public class Erf
     [Fact]
     public void TestVector()
     {
-        string path = "../../../Binary64/erf.txt";
+        string path = "../../../Binary64/erfc.txt";
+
+        StrictMath.Erfc(2.764570834254463);
 
         foreach (var line in File.ReadLines(path))
         {
@@ -64,7 +66,7 @@ public class Erf
             double x = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
             double a = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
 
-            double actual = StrictMath.Erf(x);
+            double actual = StrictMath.Erfc(x);
             Assert.Equal(a, actual);
         }
     }

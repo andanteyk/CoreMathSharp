@@ -36,5 +36,12 @@ public static partial class StrictMath
         // TODO: math-dependent
         return Math.Truncate(x);
     }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    static double Ldexp(double x, int exp)
+    {
+        // TODO: math-dependent, inefficient
+        return x * Math.Pow(2.0, exp);
+    }
 }
 
