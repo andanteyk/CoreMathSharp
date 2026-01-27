@@ -123,6 +123,42 @@ public static partial class Polyfill
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static int PopCount(uint x)
+    {
+#if NETCOREAPP3_0_OR_GREATER
+        return BitOperations.PopCount(x);
+#else
+        const uint c1 = 0x55555555;
+        const uint c2 = 0x33333333;
+        const uint c3 = 0x0f0f0f0f;
+        const uint c4 = 0x01010101;
+
+        x -= (x >> 1) & c1;
+        x = (x & c2) + ((x >> 2) & c2);
+        x = (((x + (x >> 4)) & c3) * c4) >> 24;
+        return (int)x;
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static int PopCount(ulong x)
+    {
+#if NETCOREAPP3_0_OR_GREATER
+        return BitOperations.PopCount(x);
+#else
+        const ulong c1 = 0x5555555555555555;
+        const ulong c2 = 0x3333333333333333;
+        const ulong c3 = 0x0f0f0f0f0f0f0f0f;
+        const ulong c4 = 0x0101010101010101;
+
+        x -= (x >> 1) & c1;
+        x = (x & c2) + ((x >> 2) & c2);
+        x = (((x + (x >> 4)) & c3) * c4) >> 56;
+        return (int)x;
+#endif
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ulong BigMul(ulong x, ulong y, out ulong lo)
     {
 #if NET5_0_OR_GREATER
