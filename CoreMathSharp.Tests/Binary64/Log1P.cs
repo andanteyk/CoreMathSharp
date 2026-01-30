@@ -24,7 +24,7 @@ public class Log1P
 
         for (int i = 0; i < 1024 * 1024; i++)
         {
-            double x = rng.NextDouble(0.0, 1000.0);
+            double x = rng.NextDouble(-1.0, 1024.0);
             double expected = Math.Log(x + 1.0);
             double actual = StrictMath.Log1P(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
