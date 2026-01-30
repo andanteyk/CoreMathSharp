@@ -105,6 +105,7 @@ public static partial class StrictMath
         public static Dint Magic => new Dint(0, 0x8000000000000000, -10, 0);
         public static Dint Log2 => new Dint(0xc9e3b39803f2f6af, 0xb17217f7d1cf79ab, -1, 0);
         public static Dint Log2Inv => new Dint(0xbe87fed0691d3e89, 0xb8aa3b295c17f0bb, 12, 0);
+        public static Dint Log10Inv => new Dint(0x355baaafad33dc32, 0xde5bd8a937287195, -2, 0);
 
         public static Dint OneOverLog10 => new Dint(0x355baaafad33dc32, 0xde5bd8a937287195, -2, 0);
 
@@ -616,6 +617,30 @@ public static partial class StrictMath
             int i = (int)(hi >> sh);
             ulong xhi = hi & ((1ul << sh) - 1);
             return (new Dint(lo, xhi, ex, sgn).Normalize(), i);
+        }
+
+        public static Dint Inv(double a)
+        {
+            Dint q, A;
+            Dint r = FromDoubleLog(4.0 / a);
+            r = r with { ex = r.ex - 2 };
+
+            A = FromDoubleLog(-a);
+            q = MulLog(A, r);
+            q = Add(One, q);
+            q = MulLog(r, q);
+            r = Add(r, q);
+
+            return r;
+        }
+
+        public static Dint Div(double b, double a)
+        {
+            Dint B;
+            Dint r = Inv(a);
+            B = FromDoubleLog(b);
+            r = MulLog(r, B);
+            return r;
         }
     }
 
