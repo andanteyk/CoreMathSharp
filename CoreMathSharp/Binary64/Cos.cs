@@ -99,10 +99,23 @@ public static partial class StrictMath
     private readonly record struct Dint(ulong lo, ulong hi, long ex, ulong sgn)
     {
         public static Dint Zero => new Dint(0, 0, -1076, 0);
+        public static Dint One => new Dint(0, 0x8000000000000000, 0, 0);
+        public static Dint MinusOne => new Dint(0, 0x8000000000000000, 0, 1);
+
         public static Dint Magic => new Dint(0, 0x8000000000000000, -10, 0);
+        public static Dint Log2 => new Dint(0xc9e3b39803f2f6af, 0xb17217f7d1cf79ab, -1, 0);
+        public static Dint Log2Inv => new Dint(0xbe87fed0691d3e89, 0xb8aa3b295c17f0bb, 12, 0);
 
         public bool IsZero => hi == 0;
         public Uint128 r => new Uint128(lo, hi);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static (int overflow, Uint128 result) Addu128(in Uint128 a, in Uint128 b)
+        {
+            ulong rl = a.lo + b.lo;
+            ulong rh = a.hi + b.hi + (rl < a.lo ? 1ul : 0ul);
+            return ((rh == a.hi ? rl < a.lo : rh < a.hi) ? 1 : 0, new Uint128(rl, rh));
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static int Cmp(long a, long b) => (a > b ? 1 : 0) - (a < b ? 1 : 0);
@@ -115,6 +128,18 @@ public static partial class StrictMath
             long e = (long)(_x >> 52) & 0x7ff;
             ulong m = (_x & (~0ul >> 12)) + (e != 0 ? (1ul << 52) : 0);
             e = e - 0x3fe;
+
+            return (e, m);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static (long e, ulong m) fastExtractLog(double x)
+        {
+            ulong _x = Polyfill.DoubleToUInt64Bits(x);
+
+            long e = (long)(_x >> 52) & 0x7ff;
+            ulong m = (_x & (~0ul >> 12)) + (e != 0 ? (1ul << 52) : 0);
+            e = e - 0x3ff;
 
             return (e, m);
         }
@@ -257,9 +282,78 @@ public static partial class StrictMath
             return new Dint(rr.lo, rr.hi, rex, sgn);
         }
 
+        public static Dint Mul2(long b, in Dint a)
+        {
+            if (b == 0)
+            {
+                return Zero;
+            }
+
+            ulong c = (ulong)(b < 0 ? -b : b);
+            ulong rsgn = b < 0 ? a.sgn ^ 1 : a.sgn;
+
+            Uint128 t = (Uint128)a.hi * c;
+
+            int m = t.hi != 0 ? Polyfill.LeadingZeroCount(t.hi) : 64;
+            t = t << m;
+
+            Uint128 l = (Uint128)a.lo * c;
+            l = (l << (m - 1)) >> 63;
+
+            (int overflow, t) = Addu128(l, t);
+            if (overflow != 0)
+            {
+                t += t.lo & 1;
+                t = (Uint128.One << 127) | (t >> 1);
+                m--;
+            }
+
+            return new Dint(t.lo, t.hi, a.ex + 64 - m, rsgn);
+        }
+
+        public static Dint MulLog(in Dint a, in Dint b)
+        {
+            Uint128 t = (Uint128)a.hi * b.hi;
+            Uint128 m1 = (Uint128)a.hi * b.lo;
+            Uint128 m2 = (Uint128)a.lo * b.hi;
+
+            Uint128 m;
+
+            (int overflow, m) = Addu128(m1, m2);
+            if (overflow != 0)
+            {
+                t = t with { hi = t.hi + 1 };
+            }
+            t += m.hi;
+
+            long ex = (t.hi >> 63 == 0 ? 1 : 0);
+            if (ex != 0)
+            {
+                t <<= 1;
+            }
+
+            t += (m.lo >> 63);
+
+            return new Dint(t.lo, t.hi, a.ex + b.ex - ex + 1, a.sgn ^ b.sgn);
+        }
+
         public static Dint FromDouble(double b)
         {
             var (ex, hi) = fastExtract(b);
+
+            int t = Polyfill.LeadingZeroCount(hi);
+
+            ulong sgn = b < 0.0 ? 1ul : 0ul;
+            hi = hi << t;
+            ex = ex - (t > 11 ? t - 12 : 0);
+            ulong lo = 0;
+
+            return new Dint(lo, hi, ex, sgn);
+        }
+
+        public static Dint FromDoubleLog(double b)
+        {
+            var (ex, hi) = fastExtractLog(b);
 
             int t = Polyfill.LeadingZeroCount(hi);
 
@@ -371,6 +465,27 @@ public static partial class StrictMath
                 }
             }
 
+            return Polyfill.UInt64BitsToDouble(r) * Polyfill.UInt64BitsToDouble(e);
+        }
+
+        public double ToDoubleLog()
+        {
+            ulong r = (hi >> 11) | (0x3fful << 52);
+
+            double rd = 0.0;
+            if (((hi >> 10) & 1) != 0)
+            {
+                rd += 1.1102230246251565e-16;
+            }
+            if ((hi & 0x3ff) != 0 || lo != 0)
+            {
+                rd += 5.5511151231257827e-17;
+            }
+
+            r = r | (sgn << 63);
+            r = Polyfill.DoubleToUInt64Bits(Polyfill.UInt64BitsToDouble(r) + (sgn == 0 ? rd : -rd));
+
+            ulong e = ((ulong)(ex + 1023) & 0x7fful) << 52;
             return Polyfill.UInt64BitsToDouble(r) * Polyfill.UInt64BitsToDouble(e);
         }
 
