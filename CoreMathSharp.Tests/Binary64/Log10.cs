@@ -2,15 +2,15 @@ using System.Globalization;
 
 namespace CoreMathSharp.Tests;
 
-public class Log
+public class Log10
 {
     [Fact]
     public void TestDoubles()
     {
         foreach (var x in Helper.TestDoubles)
         {
-            double expected = Math.Log(x);
-            double actual = StrictMath.Log(x);
+            double expected = Math.Log10(x);
+            double actual = StrictMath.Log10(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -24,9 +24,9 @@ public class Log
 
         for (int i = 0; i < 1024 * 1024; i++)
         {
-            double x = rng.NextDouble(0.0, 256.0);
-            double expected = Math.Log(x);
-            double actual = StrictMath.Log(x);
+            double x = rng.NextDouble(0.0, 1000.0);
+            double expected = Math.Log10(x);
+            double actual = StrictMath.Log10(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -36,8 +36,8 @@ public class Log
         {
             double x = Polyfill.UInt64BitsToDouble(rng.Next() >> 1);
 
-            double expected = Math.Log(x);
-            double actual = StrictMath.Log(x);
+            double expected = Math.Log10(x);
+            double actual = StrictMath.Log10(x);
             double ulp = Math.Max(Math.BitIncrement(actual) - actual, actual - Math.BitDecrement(actual));
 
             Assert.Equal(expected, actual, double.IsNaN(ulp) ? 0.0 : ulp);
@@ -47,7 +47,7 @@ public class Log
     [Fact]
     public void TestVector()
     {
-        string path = "../../../Binary64/log.txt";
+        string path = "../../../Binary64/log10.txt";
 
         foreach (var line in File.ReadLines(path))
         {
@@ -56,7 +56,7 @@ public class Log
             double x = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[0], NumberStyles.HexNumber));
             double a = Polyfill.UInt64BitsToDouble(ulong.Parse(parsed[1], NumberStyles.HexNumber));
 
-            double actual = StrictMath.Log(x);
+            double actual = StrictMath.Log10(x);
             Assert.Equal(a, actual);
         }
     }

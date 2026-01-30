@@ -106,6 +106,8 @@ public static partial class StrictMath
         public static Dint Log2 => new Dint(0xc9e3b39803f2f6af, 0xb17217f7d1cf79ab, -1, 0);
         public static Dint Log2Inv => new Dint(0xbe87fed0691d3e89, 0xb8aa3b295c17f0bb, 12, 0);
 
+        public static Dint OneOverLog10 => new Dint(0x355baaafad33dc32, 0xde5bd8a937287195, -2, 0);
+
         public bool IsZero => hi == 0;
         public Uint128 r => new Uint128(lo, hi);
 
