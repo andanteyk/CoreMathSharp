@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace CoreMathSharp;
 
@@ -14,6 +15,20 @@ internal readonly record struct Uint128(ulong lo, ulong hi)
         int gt = a.hi > b.hi ? 1 : a.hi < b.hi ? 0 : a.lo > b.lo ? 1 : 0;
         int lt = a.hi < b.hi ? 1 : a.hi > b.hi ? 0 : a.lo < b.lo ? 1 : 0;
         return gt - lt;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static (int carry, Uint128 r) AddU128(in Uint128 a, in Uint128 b)
+    {
+        Uint128 r = a + b;
+        return (r < a ? 1 : 0, r);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static (int borrow, Uint128 r) SubU128(in Uint128 a, in Uint128 b)
+    {
+        Uint128 r = a - b;
+        return (r > a ? 1 : 0, r);
     }
 
     public static Uint128 operator +(Uint128 a, Uint128 b)
@@ -38,6 +53,11 @@ internal readonly record struct Uint128(ulong lo, ulong hi)
     }
     public static Uint128 operator *(ulong a, Uint128 b)
         => b * a;
+
+    public static Uint128 operator &(Uint128 a, Uint128 b)
+    {
+        return new Uint128(a.lo & b.lo, a.hi & b.hi);
+    }
 
     public static Uint128 operator |(Uint128 a, Uint128 b)
     {
@@ -105,6 +125,7 @@ public static partial class StrictMath
         public static Dint Magic => new Dint(0, 0x8000000000000000, -10, 0);
         public static Dint Log2 => new Dint(0xc9e3b39803f2f6af, 0xb17217f7d1cf79ab, -1, 0);
         public static Dint Log2Inv => new Dint(0xbe87fed0691d3e89, 0xb8aa3b295c17f0bb, 12, 0);
+        public static Dint Log2InvPow => new Dint(0, 0xb8aa3b295c17f0bc, 12, 0);
         public static Dint Log10Inv => new Dint(0x355baaafad33dc32, 0xde5bd8a937287195, -2, 0);
 
         public static Dint OneOverLog10 => new Dint(0x355baaafad33dc32, 0xde5bd8a937287195, -2, 0);
@@ -248,6 +269,84 @@ public static partial class StrictMath
             return new Dint(C.lo, C.hi, rex, sgn);
         }
 
+        public static int CmpDint11(in Dint a, in Dint b)
+        {
+            int cmp = Cmp(a.ex, b.ex);
+            return cmp != 0 ? cmp : Uint128.Cmpu128(a.r, b.r);
+        }
+
+        public static Dint Add11(in Dint a, in Dint b)
+        {
+            if (a.hi == 0)
+            {
+                return b;
+            }
+
+            if (b.hi == 0)
+            {
+                return a;
+            }
+
+            int cmp = CmpDint11(a, b);
+            Dint aa, bb;
+            if (cmp == 0)
+            {
+                if ((a.sgn ^ b.sgn) != 0)
+                {
+                    return Zero;
+                }
+
+                return a with { ex = a.ex + 1 };
+            }
+            else if (cmp == -1)
+            {
+                (aa, bb) = (b, a);
+            }
+            else
+            {
+                (aa, bb) = (a, b);
+            }
+
+            ulong A = aa.hi, B = bb.hi;
+            if (aa.ex > bb.ex)
+            {
+                long k = aa.ex - bb.ex;
+                B = (k < 64) ? B >> (int)k : 0;
+            }
+
+            Uint128 C;
+            int sgn = (int)aa.sgn;
+
+            long rex = aa.ex;
+
+            if ((aa.sgn ^ bb.sgn) != 0)
+            {
+                C = A - B;
+                int ex = Polyfill.LeadingZeroCount(C.lo);
+
+                if (ex > 0)
+                {
+                    C = (A << ex) - (B << ex);
+                    rex -= ex;
+                    ex = Polyfill.LeadingZeroCount(C.lo);
+                }
+
+                C <<= ex;
+                rex -= ex;
+            }
+            else
+            {
+                C = A + B;
+                if (C < A)
+                {
+                    C = (1ul << 63) | (C >> 1);
+                    rex++;
+                }
+            }
+
+            return new Dint(0, C.lo, rex, (ulong)sgn);
+        }
+
         public static Dint Mul(in Dint a, in Dint b)
         {
             Uint128 bh = (Uint128)b.hi, bl = (Uint128)b.lo;
@@ -267,6 +366,25 @@ public static partial class StrictMath
             return new Dint(rr.lo, rr.hi, rex, sgn);
         }
 
+        public static Dint MulPow(in Dint a, in Dint b)
+        {
+            Uint128 bh = (Uint128)b.hi, bl = (Uint128)b.lo;
+
+            Uint128 m1 = a.hi * bl;
+            Uint128 m2 = a.lo * bh;
+
+            Uint128 rr = a.hi * bh;
+            rr += (Uint128)(m1.hi + m2.hi);
+
+            long ex = (long)(rr.hi >> 63);
+            rr = rr << (1 - (int)ex);
+
+            long rex = a.ex + b.ex + ex;
+            ulong sgn = a.sgn ^ b.sgn;
+
+            return new Dint(rr.lo, rr.hi, rex, sgn);
+        }
+
         public static Dint Mul21(in Dint a, in Dint b)
         {
             Uint128 bh = (Uint128)b.hi;
@@ -279,7 +397,7 @@ public static partial class StrictMath
             long ex = (long)(rr.hi >> 63);
             rr = rr << (1 - (int)ex);
 
-            long rex = a.ex + b.ex + ex - 1;
+            long rex = a.ex + b.ex + ex;
             ulong sgn = a.sgn ^ b.sgn;
 
             return new Dint(rr.lo, rr.hi, rex, sgn);
@@ -338,6 +456,46 @@ public static partial class StrictMath
             t += (m.lo >> 63);
 
             return new Dint(t.lo, t.hi, a.ex + b.ex - ex + 1, a.sgn ^ b.sgn);
+        }
+
+        public static Dint Mul11(in Dint a, in Dint b)
+        {
+            Uint128 rr = (Uint128)a.hi * b.hi;
+
+            int ex = (int)(rr.hi >> 63);
+            rr = rr << (1 - ex);
+
+            return new Dint(rr.lo, rr.hi, a.ex + b.ex + ex, a.sgn ^ b.sgn);
+        }
+
+        public static Dint MulInt64(in Dint a, long b)
+        {
+            if (b == 0)
+            {
+                return Zero;
+            }
+
+            ulong c = (ulong)(b < 0 ? -b : b);
+            ulong rsgn = b < 0 ? a.sgn ^ 1 : a.sgn;
+            long rex = a.ex + 64;
+
+            Uint128 rr = (Uint128)a.hi * c;
+
+            int m = rr.hi != 0 ? Polyfill.LeadingZeroCount(rr.hi) : 64;
+            rr <<= m;
+            rex -= m;
+
+            Uint128 l = (Uint128)a.lo * c;
+            l = (l << (m - 1)) >> 63;
+
+            rr += l;
+            if (rr < l)
+            {
+                rr = (Uint128.One << 127) | (rr >> 1);
+                rex++;
+            }
+
+            return new Dint(rr.lo, rr.hi, rex, rsgn);
         }
 
         public static Dint FromDouble(double b)
