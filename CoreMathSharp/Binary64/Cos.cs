@@ -64,6 +64,11 @@ internal readonly record struct Uint128(ulong lo, ulong hi)
         return new Uint128(a.lo | b.lo, a.hi | b.hi);
     }
 
+    public static Uint128 operator ^(Uint128 a, Uint128 b)
+    {
+        return new Uint128(a.lo ^ b.lo, a.hi ^ b.hi);
+    }
+
     public static Uint128 operator <<(Uint128 a, int k)
     {
         // assumes 0 <= k < 128
