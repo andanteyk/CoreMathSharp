@@ -55,8 +55,6 @@ public class Atan2Pi
     {
         string path = "../../../Binary64/atan2pi.txt";
 
-        StrictMath.Atan2Pi(1.7976931348623157E+308, -1);
-
         foreach (var line in File.ReadLines(path))
         {
             var parsed = line.Split('\t');

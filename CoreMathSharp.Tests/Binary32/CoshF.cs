@@ -50,8 +50,6 @@ public class CoshF
     {
         string path = "../../../Binary32/coshf.txt";
 
-        StrictMathF.Cosh(2.7182817f);
-
         foreach (var line in File.ReadLines(path))
         {
             var parsed = line.Split('\t');

@@ -51,9 +51,6 @@ public class Log2P1
     {
         string path = "../../../Binary64/log2p1.txt";
 
-
-        StrictMath.Log2P1(-1.0);
-
         foreach (var line in File.ReadLines(path))
         {
             var parsed = line.Split('\t');
