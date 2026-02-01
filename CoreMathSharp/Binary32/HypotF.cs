@@ -1,5 +1,3 @@
-using System;
-
 namespace CoreMathSharp;
 
 public static partial class StrictMathF
