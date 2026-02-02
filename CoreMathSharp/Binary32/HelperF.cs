@@ -1,11 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
 
-#if NETCOREAPP3_0_OR_GREATER
-using System.Runtime.Intrinsics;
-using System.Runtime.Intrinsics.Arm;
-#endif
-
 namespace CoreMathSharp;
 
 public static partial class StrictMathF
@@ -21,5 +16,12 @@ public static partial class StrictMathF
     {
         // TODO: math-dependent
         return MathF.Truncate(x);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal static float BuiltinFloor(float x)
+    {
+        // TODO: math-dependent
+        return MathF.Floor(x);
     }
 }
