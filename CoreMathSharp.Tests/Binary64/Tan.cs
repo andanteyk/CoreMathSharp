@@ -22,8 +22,6 @@ public class Tan
     {
         var rng = new Seiran(1, 1);
 
-        StrictMath.Tan(2.3618203766460253);
-
         for (int i = 0; i < 1024 * 1024; i++)
         {
             double x = rng.NextDouble(-Math.PI, Math.PI);
