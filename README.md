@@ -3,7 +3,7 @@
 Accurate, portable, and deterministic implementations of mathematical functions
 
 <a href="https://www.nuget.org/packages/AndanteSoft.CoreMathSharp">![NuGet Version](https://img.shields.io/nuget/vpre/AndanteSoft.CoreMathSharp)</a>
-<a href="LICENSE">![GitHub License](https://img.shields.io/github/license/andanteyk/CoreMathSharp)</a>
+<a href="LICENSE.md">![GitHub License](https://img.shields.io/github/license/andanteyk/CoreMathSharp)</a>
 <a href="https://www.nuget.org/packages/AndanteSoft.CoreMathSharp">![NuGet Downloads](https://img.shields.io/nuget/dt/AndanteSoft.CoreMathSharp)</a>
 
 ![Logo](CoreMathSharp.png)
