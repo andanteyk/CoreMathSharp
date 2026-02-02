@@ -53,9 +53,6 @@ public class TGamma
     {
         string path = "../../../Binary64/tgamma.txt";
 
-        StrictMath.TGamma(2.860486667597499);
-
-
         foreach (var line in File.ReadLines(path))
         {
             var parsed = line.Split('\t');

@@ -54,8 +54,6 @@ public class TGammaF
     {
         string path = "../../../Binary32/tgammaf.txt";
 
-        StrictMathF.TGamma(6.2831855f);
-
         foreach (var line in File.ReadLines(path))
         {
             var parsed = line.Split('\t');
