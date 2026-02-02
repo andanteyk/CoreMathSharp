@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <None Include="$(SolutionDir)LICENSE.md" Pack="true" PackagePath="" />
+    <None Include="$(SolutionDir)THIRD-PARTY.md" Pack="true" PackagePath="" />
     <None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
     <None Include="$(SolutionDir)CoreMathSharp.png" Pack="true" PackagePath="" />
   </ItemGroup>
