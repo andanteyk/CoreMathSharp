@@ -14,7 +14,7 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("Log10P1F", () =>
         {
-            ResultF = Mathf.Log10(XF + 1.0f);
+            ResultF = Mathf.Log10(XF + 1f);
         });
     }
 
@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("Log10P1F", () =>
         {
-            ResultF = math.log10(XF + 1.0f);
+            ResultF = math.log10(XF + 1f);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void BurstLowLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            ResultF = BurstMathF.Log10P1Low(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void BurstMediumLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            ResultF = BurstMathF.Log10P1Medium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void BurstHighLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            ResultF = BurstMathF.Log10P1High(XF);
         });
     }
 
@@ -51,7 +81,7 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += Mathf.Log10(x + 1.0f);
+                sum += Mathf.Log10(x + 1f);
             }
 
             ResultF = sum;
@@ -68,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += math.log10(x + 1.0f);
+                sum += math.log10(x + 1f);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void BurstLowLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Log10P1Low(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void BurstMediumLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Log10P1Medium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void BurstHighLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Log10P1High(x);
             }
 
             ResultF = sum;

@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Exp2")]
+    public void BurstLowExp2()
+    {
+        MeasurePerformance("Exp2", () =>
+        {
+            Result = BurstMath.Exp2Low(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2")]
+    public void BurstMediumExp2()
+    {
+        MeasurePerformance("Exp2", () =>
+        {
+            Result = BurstMath.Exp2Medium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2")]
+    public void BurstHighExp2()
+    {
+        MeasurePerformance("Exp2", () =>
+        {
+            Result = BurstMath.Exp2High(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2")]
     public void CoreExp2()
     {
         MeasurePerformance("Exp2", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Exp2")]
+    public void BurstLowExp2()
+    {
+        MeasurePerformance("Exp2", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.Exp2Low(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2")]
+    public void BurstMediumExp2()
+    {
+        MeasurePerformance("Exp2", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.Exp2Medium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2")]
+    public void BurstHighExp2()
+    {
+        MeasurePerformance("Exp2", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.Exp2High(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Exp2")]
     public void CoreExp2()

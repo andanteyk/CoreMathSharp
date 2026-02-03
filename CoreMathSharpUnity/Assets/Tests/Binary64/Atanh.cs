@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Atanh")]
+    public void BurstLowAtanh()
+    {
+        MeasurePerformance("Atanh", () =>
+        {
+            Result = BurstMath.AtanhLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atanh")]
+    public void BurstMediumAtanh()
+    {
+        MeasurePerformance("Atanh", () =>
+        {
+            Result = BurstMath.AtanhMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atanh")]
+    public void BurstHighAtanh()
+    {
+        MeasurePerformance("Atanh", () =>
+        {
+            Result = BurstMath.AtanhHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atanh")]
     public void CoreAtanh()
     {
         MeasurePerformance("Atanh", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Atanh")]
+    public void BurstLowAtanh()
+    {
+        MeasurePerformance("Atanh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AtanhLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atanh")]
+    public void BurstMediumAtanh()
+    {
+        MeasurePerformance("Atanh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AtanhMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atanh")]
+    public void BurstHighAtanh()
+    {
+        MeasurePerformance("Atanh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AtanhHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Atanh")]
     public void CoreAtanh()

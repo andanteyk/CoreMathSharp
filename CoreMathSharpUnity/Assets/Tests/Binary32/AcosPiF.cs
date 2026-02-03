@@ -14,7 +14,7 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("AcosPiF", () =>
         {
-            ResultF = Mathf.Acos(XF) / Mathf.PI;
+            ResultF = Mathf.Acos(XF * Mathf.PI);
         });
     }
 
@@ -24,7 +24,7 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("AcosPiF", () =>
         {
-            ResultF = math.acos(XF) / math.PI;
+            ResultF = math.acos(XF * math.PI);
         });
     }
 
@@ -81,7 +81,7 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += Mathf.Acos(x) / Mathf.PI;
+                sum += Mathf.Acos(x * Mathf.PI);
             }
 
             ResultF = sum;
@@ -98,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += math.acos(x) / math.PI;
+                sum += math.acos(x * math.PI);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AcosPiF")]
+    public void BurstLowAcosPiF()
+    {
+        MeasurePerformance("AcosPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AcosPiLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AcosPiF")]
+    public void BurstMediumAcosPiF()
+    {
+        MeasurePerformance("AcosPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AcosPiMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AcosPiF")]
+    public void BurstHighAcosPiF()
+    {
+        MeasurePerformance("AcosPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AcosPiHigh(x);
             }
 
             ResultF = sum;

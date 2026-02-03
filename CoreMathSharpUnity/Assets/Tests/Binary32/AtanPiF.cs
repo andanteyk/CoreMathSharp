@@ -14,7 +14,7 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("AtanPiF", () =>
         {
-            ResultF = Mathf.Atan(XF) / Mathf.PI;
+            ResultF = Mathf.Atan(XF * Mathf.PI);
         });
     }
 
@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("AtanPiF", () =>
         {
-            ResultF = math.atan(XF) / math.PI;
+            ResultF = math.atan(XF * math.PI);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPiF")]
+    public void BurstLowAtanPiF()
+    {
+        MeasurePerformance("AtanPiF", () =>
+        {
+            ResultF = BurstMathF.AtanPiLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPiF")]
+    public void BurstMediumAtanPiF()
+    {
+        MeasurePerformance("AtanPiF", () =>
+        {
+            ResultF = BurstMathF.AtanPiMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPiF")]
+    public void BurstHighAtanPiF()
+    {
+        MeasurePerformance("AtanPiF", () =>
+        {
+            ResultF = BurstMathF.AtanPiHigh(XF);
         });
     }
 
@@ -51,7 +81,7 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += Mathf.Atan(x) / Mathf.PI;
+                sum += Mathf.Atan(x * Mathf.PI);
             }
 
             ResultF = sum;
@@ -68,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += math.atan(x) / math.PI;
+                sum += math.atan(x * math.PI);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPiF")]
+    public void BurstLowAtanPiF()
+    {
+        MeasurePerformance("AtanPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AtanPiLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPiF")]
+    public void BurstMediumAtanPiF()
+    {
+        MeasurePerformance("AtanPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AtanPiMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPiF")]
+    public void BurstHighAtanPiF()
+    {
+        MeasurePerformance("AtanPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AtanPiHigh(x);
             }
 
             ResultF = sum;

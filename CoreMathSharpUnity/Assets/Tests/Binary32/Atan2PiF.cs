@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("Atan2PiF")]
+    public void BurstLowAtan2PiF()
+    {
+        MeasurePerformance("Atan2PiF", () =>
+        {
+            ResultF = BurstMathF.Atan2PiLow(YF, XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atan2PiF")]
+    public void BurstMediumAtan2PiF()
+    {
+        MeasurePerformance("Atan2PiF", () =>
+        {
+            ResultF = BurstMathF.Atan2PiMedium(YF, XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atan2PiF")]
+    public void BurstHighAtan2PiF()
+    {
+        MeasurePerformance("Atan2PiF", () =>
+        {
+            ResultF = BurstMathF.Atan2PiHigh(YF, XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atan2PiF")]
     public void CoreAtan2PiF()
     {
         MeasurePerformance("Atan2PiF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             for (int i = 0; i < XF.Length; i++)
             {
                 sum += math.atan2(YF[i], XF[i]) / math.PI;
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atan2PiF")]
+    public void BurstLowAtan2PiF()
+    {
+        MeasurePerformance("Atan2PiF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.Atan2PiLow(YF[i], XF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atan2PiF")]
+    public void BurstMediumAtan2PiF()
+    {
+        MeasurePerformance("Atan2PiF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.Atan2PiMedium(YF[i], XF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Atan2PiF")]
+    public void BurstHighAtan2PiF()
+    {
+        MeasurePerformance("Atan2PiF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.Atan2PiHigh(YF[i], XF[i]);
             }
 
             ResultF = sum;

@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("TanF")]
+    public void BurstLowTanF()
+    {
+        MeasurePerformance("TanF", () =>
+        {
+            ResultF = BurstMathF.TanLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanF")]
+    public void BurstMediumTanF()
+    {
+        MeasurePerformance("TanF", () =>
+        {
+            ResultF = BurstMathF.TanMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanF")]
+    public void BurstHighTanF()
+    {
+        MeasurePerformance("TanF", () =>
+        {
+            ResultF = BurstMathF.TanHigh(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanF")]
     public void CoreTanF()
     {
         MeasurePerformance("TanF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.tan(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanF")]
+    public void BurstLowTanF()
+    {
+        MeasurePerformance("TanF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.TanLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanF")]
+    public void BurstMediumTanF()
+    {
+        MeasurePerformance("TanF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.TanMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanF")]
+    public void BurstHighTanF()
+    {
+        MeasurePerformance("TanF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.TanHigh(x);
             }
 
             ResultF = sum;

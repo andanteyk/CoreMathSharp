@@ -31,6 +31,39 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("SinCosF")]
+    public void BurstLowSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            BurstMathF.SinCosLow(XF, out float sin, out float cos);
+            ResultF = sin + cos;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void BurstMediumSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            BurstMathF.SinCosMedium(XF, out float sin, out float cos);
+            ResultF = sin + cos;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void BurstHighSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            BurstMathF.SinCosHigh(XF, out float sin, out float cos);
+            ResultF = sin + cos;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinCosF")]
     public void CoreSinCosF()
     {
         MeasurePerformance("SinCosF", () =>
@@ -71,6 +104,60 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 math.sincos(x, out float sin, out float cos);
+                sum += sin + cos;
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void BurstLowSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                BurstMathF.SinCosLow(x, out float sin, out float cos);
+                sum += sin + cos;
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void BurstMediumSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                BurstMathF.SinCosMedium(x, out float sin, out float cos);
+                sum += sin + cos;
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void BurstHighSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                BurstMathF.SinCosHigh(x, out float sin, out float cos);
                 sum += sin + cos;
             }
 

@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Acosh")]
+    public void BurstLowAcosh()
+    {
+        MeasurePerformance("Acosh", () =>
+        {
+            Result = BurstMath.AcoshLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Acosh")]
+    public void BurstMediumAcosh()
+    {
+        MeasurePerformance("Acosh", () =>
+        {
+            Result = BurstMath.AcoshMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Acosh")]
+    public void BurstHighAcosh()
+    {
+        MeasurePerformance("Acosh", () =>
+        {
+            Result = BurstMath.AcoshHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Acosh")]
     public void CoreAcosh()
     {
         MeasurePerformance("Acosh", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Acosh")]
+    public void BurstLowAcosh()
+    {
+        MeasurePerformance("Acosh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AcoshLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Acosh")]
+    public void BurstMediumAcosh()
+    {
+        MeasurePerformance("Acosh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AcoshMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Acosh")]
+    public void BurstHighAcosh()
+    {
+        MeasurePerformance("Acosh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AcoshHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Acosh")]
     public void CoreAcosh()

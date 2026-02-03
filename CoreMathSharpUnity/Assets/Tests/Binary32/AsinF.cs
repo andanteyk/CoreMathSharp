@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("AsinF")]
+    public void BurstLowAsinF()
+    {
+        MeasurePerformance("AsinF", () =>
+        {
+            ResultF = BurstMathF.AsinLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AsinF")]
+    public void BurstMediumAsinF()
+    {
+        MeasurePerformance("AsinF", () =>
+        {
+            ResultF = BurstMathF.AsinMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AsinF")]
+    public void BurstHighAsinF()
+    {
+        MeasurePerformance("AsinF", () =>
+        {
+            ResultF = BurstMathF.AsinHigh(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AsinF")]
     public void CoreAsinF()
     {
         MeasurePerformance("AsinF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.asin(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AsinF")]
+    public void BurstLowAsinF()
+    {
+        MeasurePerformance("AsinF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AsinLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AsinF")]
+    public void BurstMediumAsinF()
+    {
+        MeasurePerformance("AsinF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AsinMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AsinF")]
+    public void BurstHighAsinF()
+    {
+        MeasurePerformance("AsinF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.AsinHigh(x);
             }
 
             ResultF = sum;

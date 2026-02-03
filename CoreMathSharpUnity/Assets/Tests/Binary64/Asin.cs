@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Asin")]
+    public void BurstLowAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            Result = BurstMath.AsinLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asin")]
+    public void BurstMediumAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            Result = BurstMath.AsinMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asin")]
+    public void BurstHighAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            Result = BurstMath.AsinHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asin")]
     public void CoreAsin()
     {
         MeasurePerformance("Asin", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Asin")]
+    public void BurstLowAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AsinLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asin")]
+    public void BurstMediumAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AsinMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asin")]
+    public void BurstHighAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AsinHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Asin")]
     public void CoreAsin()

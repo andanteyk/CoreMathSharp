@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("ReciprocalSqrtF", () =>
         {
-            ResultF = 1.0f / math.sqrt(XF);
+            ResultF = math.rsqrt(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void BurstLowReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            ResultF = BurstMathF.ReciprocalSqrtLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void BurstMediumReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            ResultF = BurstMathF.ReciprocalSqrtMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void BurstHighReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            ResultF = BurstMathF.ReciprocalSqrtHigh(XF);
         });
     }
 
@@ -68,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += 1.0f / math.sqrt(x);
+                sum += math.rsqrt(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void BurstLowReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ReciprocalSqrtLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void BurstMediumReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ReciprocalSqrtMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void BurstHighReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ReciprocalSqrtHigh(x);
             }
 
             ResultF = sum;

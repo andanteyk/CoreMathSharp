@@ -742,6 +742,16 @@ public static class BurstMathF
 
 
     [BurstCompile(FloatMode = FloatMode.Fast, FloatPrecision = FloatPrecision.Low)]
+    public static float HypotLow(float x, float y) => math.length(new float2(x, y));
+
+    [BurstCompile(FloatMode = FloatMode.Strict, FloatPrecision = FloatPrecision.Medium)]
+    public static float HypotMedium(float x, float y) => math.length(new float2(x, y));
+
+    [BurstCompile(FloatMode = FloatMode.Deterministic, FloatPrecision = FloatPrecision.High)]
+    public static float HypotHigh(float x, float y) => math.length(new float2(x, y));
+
+
+    [BurstCompile(FloatMode = FloatMode.Fast, FloatPrecision = FloatPrecision.Low)]
     public static float LogLow(float x) => math.log(x);
 
     [BurstCompile(FloatMode = FloatMode.Strict, FloatPrecision = FloatPrecision.Medium)]

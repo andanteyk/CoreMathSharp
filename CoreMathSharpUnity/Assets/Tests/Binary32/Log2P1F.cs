@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("Log2P1F")]
+    public void BurstLowLog2P1F()
+    {
+        MeasurePerformance("Log2P1F", () =>
+        {
+            ResultF = BurstMathF.Log2P1Low(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log2P1F")]
+    public void BurstMediumLog2P1F()
+    {
+        MeasurePerformance("Log2P1F", () =>
+        {
+            ResultF = BurstMathF.Log2P1Medium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log2P1F")]
+    public void BurstHighLog2P1F()
+    {
+        MeasurePerformance("Log2P1F", () =>
+        {
+            ResultF = BurstMathF.Log2P1High(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log2P1F")]
     public void CoreLog2P1F()
     {
         MeasurePerformance("Log2P1F", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.log2(x + 1.0f);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log2P1F")]
+    public void BurstLowLog2P1F()
+    {
+        MeasurePerformance("Log2P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Log2P1Low(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log2P1F")]
+    public void BurstMediumLog2P1F()
+    {
+        MeasurePerformance("Log2P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Log2P1Medium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log2P1F")]
+    public void BurstHighLog2P1F()
+    {
+        MeasurePerformance("Log2P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Log2P1High(x);
             }
 
             ResultF = sum;

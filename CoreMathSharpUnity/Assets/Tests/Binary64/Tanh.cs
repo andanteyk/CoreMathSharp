@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Tanh")]
+    public void BurstLowTanh()
+    {
+        MeasurePerformance("Tanh", () =>
+        {
+            Result = BurstMath.TanhLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Tanh")]
+    public void BurstMediumTanh()
+    {
+        MeasurePerformance("Tanh", () =>
+        {
+            Result = BurstMath.TanhMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Tanh")]
+    public void BurstHighTanh()
+    {
+        MeasurePerformance("Tanh", () =>
+        {
+            Result = BurstMath.TanhHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Tanh")]
     public void CoreTanh()
     {
         MeasurePerformance("Tanh", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Tanh")]
+    public void BurstLowTanh()
+    {
+        MeasurePerformance("Tanh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.TanhLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Tanh")]
+    public void BurstMediumTanh()
+    {
+        MeasurePerformance("Tanh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.TanhMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Tanh")]
+    public void BurstHighTanh()
+    {
+        MeasurePerformance("Tanh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.TanhHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Tanh")]
     public void CoreTanh()

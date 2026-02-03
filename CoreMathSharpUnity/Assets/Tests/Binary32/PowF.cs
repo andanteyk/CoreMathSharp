@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("PowF")]
+    public void BurstLowPowF()
+    {
+        MeasurePerformance("PowF", () =>
+        {
+            ResultF = BurstMathF.PowLow(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("PowF")]
+    public void BurstMediumPowF()
+    {
+        MeasurePerformance("PowF", () =>
+        {
+            ResultF = BurstMathF.PowMedium(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("PowF")]
+    public void BurstHighPowF()
+    {
+        MeasurePerformance("PowF", () =>
+        {
+            ResultF = BurstMathF.PowHigh(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("PowF")]
     public void CorePowF()
     {
         MeasurePerformance("PowF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             for (int i = 0; i < XF.Length; i++)
             {
                 sum += math.pow(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("PowF")]
+    public void BurstLowPowF()
+    {
+        MeasurePerformance("PowF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.PowLow(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("PowF")]
+    public void BurstMediumPowF()
+    {
+        MeasurePerformance("PowF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.PowMedium(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("PowF")]
+    public void BurstHighPowF()
+    {
+        MeasurePerformance("PowF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.PowHigh(XF[i], YF[i]);
             }
 
             ResultF = sum;

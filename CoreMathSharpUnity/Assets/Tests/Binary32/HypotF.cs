@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("HypotF", () =>
         {
-            ResultF = math.sqrt(XF * XF + YF * YF);
+            ResultF = math.length(new float2(XF, YF));
+        });
+    }
+
+    [Test, Performance]
+    [Category("HypotF")]
+    public void BurstLowHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            ResultF = BurstMathF.HypotLow(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("HypotF")]
+    public void BurstMediumHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            ResultF = BurstMathF.HypotMedium(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("HypotF")]
+    public void BurstHighHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            ResultF = BurstMathF.HypotHigh(XF, YF);
         });
     }
 
@@ -68,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             for (int i = 0; i < XF.Length; i++)
             {
-                sum += math.sqrt(XF[i] * XF[i] + YF[i] * YF[i]);
+                sum += math.length(new float2(XF[i], YF[i]));
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("HypotF")]
+    public void BurstLowHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.HypotLow(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("HypotF")]
+    public void BurstMediumHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.HypotMedium(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("HypotF")]
+    public void BurstHighHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.HypotHigh(XF[i], YF[i]);
             }
 
             ResultF = sum;

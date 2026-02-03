@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("SinF")]
+    public void BurstLowSinF()
+    {
+        MeasurePerformance("SinF", () =>
+        {
+            ResultF = BurstMathF.SinLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinF")]
+    public void BurstMediumSinF()
+    {
+        MeasurePerformance("SinF", () =>
+        {
+            ResultF = BurstMathF.SinMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinF")]
+    public void BurstHighSinF()
+    {
+        MeasurePerformance("SinF", () =>
+        {
+            ResultF = BurstMathF.SinHigh(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinF")]
     public void CoreSinF()
     {
         MeasurePerformance("SinF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.sin(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinF")]
+    public void BurstLowSinF()
+    {
+        MeasurePerformance("SinF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.SinLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinF")]
+    public void BurstMediumSinF()
+    {
+        MeasurePerformance("SinF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.SinMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("SinF")]
+    public void BurstHighSinF()
+    {
+        MeasurePerformance("SinF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.SinHigh(x);
             }
 
             ResultF = sum;

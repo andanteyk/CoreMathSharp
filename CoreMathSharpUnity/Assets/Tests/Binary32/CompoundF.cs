@@ -14,7 +14,7 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("CompoundF", () =>
         {
-            ResultF = Mathf.Pow(XF + 1.0f, YF);
+            ResultF = Mathf.Pow(XF + 1f, YF);
         });
     }
 
@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("CompoundF", () =>
         {
-            ResultF = math.pow(XF + 1.0f, YF);
+            ResultF = math.pow(XF + 1f, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CompoundF")]
+    public void BurstLowCompoundF()
+    {
+        MeasurePerformance("CompoundF", () =>
+        {
+            ResultF = BurstMathF.CompoundLow(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CompoundF")]
+    public void BurstMediumCompoundF()
+    {
+        MeasurePerformance("CompoundF", () =>
+        {
+            ResultF = BurstMathF.CompoundMedium(XF, YF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CompoundF")]
+    public void BurstHighCompoundF()
+    {
+        MeasurePerformance("CompoundF", () =>
+        {
+            ResultF = BurstMathF.CompoundHigh(XF, YF);
         });
     }
 
@@ -51,7 +81,7 @@ public partial class UnityMacroBenchmark
 
             for (int i = 0; i < XF.Length; i++)
             {
-                sum += Mathf.Pow(XF[i] + 1.0f, YF[i]);
+                sum += Mathf.Pow(XF[i] + 1f, YF[i]);
             }
 
             ResultF = sum;
@@ -68,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             for (int i = 0; i < XF.Length; i++)
             {
-                sum += math.pow(XF[i] + 1.0f, YF[i]);
+                sum += math.pow(XF[i] + 1f, YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CompoundF")]
+    public void BurstLowCompoundF()
+    {
+        MeasurePerformance("CompoundF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.CompoundLow(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CompoundF")]
+    public void BurstMediumCompoundF()
+    {
+        MeasurePerformance("CompoundF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.CompoundMedium(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CompoundF")]
+    public void BurstHighCompoundF()
+    {
+        MeasurePerformance("CompoundF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += BurstMathF.CompoundHigh(XF[i], YF[i]);
             }
 
             ResultF = sum;

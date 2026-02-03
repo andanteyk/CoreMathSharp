@@ -8,12 +8,42 @@ namespace CoreMathSharpUnity.Tests;
 public partial class UnityBenchmark
 {
     [Test, Performance]
-    [Category("CosF")]
+    [Category("CoshF")]
     public void MathematicsCoshF()
     {
         MeasurePerformance("CoshF", () =>
         {
             ResultF = math.cosh(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CoshF")]
+    public void BurstLowCoshF()
+    {
+        MeasurePerformance("CoshF", () =>
+        {
+            ResultF = BurstMathF.CoshLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CoshF")]
+    public void BurstMediumCoshF()
+    {
+        MeasurePerformance("CoshF", () =>
+        {
+            ResultF = BurstMathF.CoshMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CoshF")]
+    public void BurstHighCoshF()
+    {
+        MeasurePerformance("CoshF", () =>
+        {
+            ResultF = BurstMathF.CoshHigh(XF);
         });
     }
 
@@ -41,6 +71,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.cosh(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CoshF")]
+    public void BurstLowCoshF()
+    {
+        MeasurePerformance("CoshF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.CoshLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CoshF")]
+    public void BurstMediumCoshF()
+    {
+        MeasurePerformance("CoshF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.CoshMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CoshF")]
+    public void BurstHighCoshF()
+    {
+        MeasurePerformance("CoshF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.CoshHigh(x);
             }
 
             ResultF = sum;

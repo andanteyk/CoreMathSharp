@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("TanPiF")]
+    public void BurstLowTanPiF()
+    {
+        MeasurePerformance("TanPiF", () =>
+        {
+            ResultF = BurstMathF.TanPiLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanPiF")]
+    public void BurstMediumTanPiF()
+    {
+        MeasurePerformance("TanPiF", () =>
+        {
+            ResultF = BurstMathF.TanPiMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanPiF")]
+    public void BurstHighTanPiF()
+    {
+        MeasurePerformance("TanPiF", () =>
+        {
+            ResultF = BurstMathF.TanPiHigh(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanPiF")]
     public void CoreTanPiF()
     {
         MeasurePerformance("TanPiF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.tan(x * math.PI);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanPiF")]
+    public void BurstLowTanPiF()
+    {
+        MeasurePerformance("TanPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.TanPiLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanPiF")]
+    public void BurstMediumTanPiF()
+    {
+        MeasurePerformance("TanPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.TanPiMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("TanPiF")]
+    public void BurstHighTanPiF()
+    {
+        MeasurePerformance("TanPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.TanPiHigh(x);
             }
 
             ResultF = sum;

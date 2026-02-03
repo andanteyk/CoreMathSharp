@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("Exp2M1F", () =>
         {
-            ResultF = math.exp(XF * 0.69314718055994530941723212145818f) - 1.0f;
+            ResultF = math.exp2(XF) - 1.0f;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1F")]
+    public void BurstLowExp2M1F()
+    {
+        MeasurePerformance("Exp2M1F", () =>
+        {
+            ResultF = BurstMathF.Exp2M1Low(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1F")]
+    public void BurstMediumExp2M1F()
+    {
+        MeasurePerformance("Exp2M1F", () =>
+        {
+            ResultF = BurstMathF.Exp2M1Medium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1F")]
+    public void BurstHighExp2M1F()
+    {
+        MeasurePerformance("Exp2M1F", () =>
+        {
+            ResultF = BurstMathF.Exp2M1High(XF);
         });
     }
 
@@ -68,7 +98,58 @@ public partial class UnityMacroBenchmark
 
             foreach (var x in XF)
             {
-                sum += math.exp(x * 0.69314718055994530941723212145818f) - 1.0f;
+                sum += math.exp2(x) - 1.0f;
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1F")]
+    public void BurstLowExp2M1F()
+    {
+        MeasurePerformance("Exp2M1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Exp2M1Low(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1F")]
+    public void BurstMediumExp2M1F()
+    {
+        MeasurePerformance("Exp2M1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Exp2M1Medium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1F")]
+    public void BurstHighExp2M1F()
+    {
+        MeasurePerformance("Exp2M1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.Exp2M1High(x);
             }
 
             ResultF = sum;

@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("CosPi")]
+    public void BurstLowCosPi()
+    {
+        MeasurePerformance("CosPi", () =>
+        {
+            Result = BurstMath.CosPiLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPi")]
+    public void BurstMediumCosPi()
+    {
+        MeasurePerformance("CosPi", () =>
+        {
+            Result = BurstMath.CosPiMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPi")]
+    public void BurstHighCosPi()
+    {
+        MeasurePerformance("CosPi", () =>
+        {
+            Result = BurstMath.CosPiHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPi")]
     public void CoreCosPi()
     {
         MeasurePerformance("CosPi", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("CosPi")]
+    public void BurstLowCosPi()
+    {
+        MeasurePerformance("CosPi", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.CosPiLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPi")]
+    public void BurstMediumCosPi()
+    {
+        MeasurePerformance("CosPi", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.CosPiMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPi")]
+    public void BurstHighCosPi()
+    {
+        MeasurePerformance("CosPi", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.CosPiHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("CosPi")]
     public void CoreCosPi()

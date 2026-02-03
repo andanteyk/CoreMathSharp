@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Sinh")]
+    public void BurstLowSinh()
+    {
+        MeasurePerformance("Sinh", () =>
+        {
+            Result = BurstMath.SinhLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Sinh")]
+    public void BurstMediumSinh()
+    {
+        MeasurePerformance("Sinh", () =>
+        {
+            Result = BurstMath.SinhMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Sinh")]
+    public void BurstHighSinh()
+    {
+        MeasurePerformance("Sinh", () =>
+        {
+            Result = BurstMath.SinhHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Sinh")]
     public void CoreSinh()
     {
         MeasurePerformance("Sinh", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Sinh")]
+    public void BurstLowSinh()
+    {
+        MeasurePerformance("Sinh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.SinhLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Sinh")]
+    public void BurstMediumSinh()
+    {
+        MeasurePerformance("Sinh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.SinhMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Sinh")]
+    public void BurstHighSinh()
+    {
+        MeasurePerformance("Sinh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.SinhHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Sinh")]
     public void CoreSinh()

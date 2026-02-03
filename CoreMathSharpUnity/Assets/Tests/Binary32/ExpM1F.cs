@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("ExpM1F")]
+    public void BurstLowExpM1F()
+    {
+        MeasurePerformance("ExpM1F", () =>
+        {
+            ResultF = BurstMathF.ExpM1Low(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpM1F")]
+    public void BurstMediumExpM1F()
+    {
+        MeasurePerformance("ExpM1F", () =>
+        {
+            ResultF = BurstMathF.ExpM1Medium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpM1F")]
+    public void BurstHighExpM1F()
+    {
+        MeasurePerformance("ExpM1F", () =>
+        {
+            ResultF = BurstMathF.ExpM1High(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpM1F")]
     public void CoreExpM1F()
     {
         MeasurePerformance("ExpM1F", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.exp(x) - 1.0f;
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpM1F")]
+    public void BurstLowExpM1F()
+    {
+        MeasurePerformance("ExpM1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ExpM1Low(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpM1F")]
+    public void BurstMediumExpM1F()
+    {
+        MeasurePerformance("ExpM1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ExpM1Medium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpM1F")]
+    public void BurstHighExpM1F()
+    {
+        MeasurePerformance("ExpM1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ExpM1High(x);
             }
 
             ResultF = sum;

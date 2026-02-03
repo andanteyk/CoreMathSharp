@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Log")]
+    public void BurstLowLog()
+    {
+        MeasurePerformance("Log", () =>
+        {
+            Result = BurstMath.LogLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log")]
+    public void BurstMediumLog()
+    {
+        MeasurePerformance("Log", () =>
+        {
+            Result = BurstMath.LogMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log")]
+    public void BurstHighLog()
+    {
+        MeasurePerformance("Log", () =>
+        {
+            Result = BurstMath.LogHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log")]
     public void CoreLog()
     {
         MeasurePerformance("Log", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Log")]
+    public void BurstLowLog()
+    {
+        MeasurePerformance("Log", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.LogLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log")]
+    public void BurstMediumLog()
+    {
+        MeasurePerformance("Log", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.LogMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log")]
+    public void BurstHighLog()
+    {
+        MeasurePerformance("Log", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.LogHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Log")]
     public void CoreLog()

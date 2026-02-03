@@ -24,7 +24,37 @@ public partial class UnityBenchmark
     {
         MeasurePerformance("CosPiF", () =>
         {
-            ResultF = math.cos(XF * Mathf.PI);
+            ResultF = math.cos(XF * math.PI);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPiF")]
+    public void BurstLowCosPiF()
+    {
+        MeasurePerformance("CosPiF", () =>
+        {
+            ResultF = BurstMathF.CosPiLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPiF")]
+    public void BurstMediumCosPiF()
+    {
+        MeasurePerformance("CosPiF", () =>
+        {
+            ResultF = BurstMathF.CosPiMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPiF")]
+    public void BurstHighCosPiF()
+    {
+        MeasurePerformance("CosPiF", () =>
+        {
+            ResultF = BurstMathF.CosPiHigh(XF);
         });
     }
 
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.cos(x * math.PI);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPiF")]
+    public void BurstLowCosPiF()
+    {
+        MeasurePerformance("CosPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.CosPiLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPiF")]
+    public void BurstMediumCosPiF()
+    {
+        MeasurePerformance("CosPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.CosPiMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("CosPiF")]
+    public void BurstHighCosPiF()
+    {
+        MeasurePerformance("CosPiF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.CosPiHigh(x);
             }
 
             ResultF = sum;

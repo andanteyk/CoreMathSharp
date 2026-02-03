@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Asinh")]
+    public void BurstLowAsinh()
+    {
+        MeasurePerformance("Asinh", () =>
+        {
+            Result = BurstMath.AsinhLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asinh")]
+    public void BurstMediumAsinh()
+    {
+        MeasurePerformance("Asinh", () =>
+        {
+            Result = BurstMath.AsinhMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asinh")]
+    public void BurstHighAsinh()
+    {
+        MeasurePerformance("Asinh", () =>
+        {
+            Result = BurstMath.AsinhHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asinh")]
     public void CoreAsinh()
     {
         MeasurePerformance("Asinh", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Asinh")]
+    public void BurstLowAsinh()
+    {
+        MeasurePerformance("Asinh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AsinhLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asinh")]
+    public void BurstMediumAsinh()
+    {
+        MeasurePerformance("Asinh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AsinhMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Asinh")]
+    public void BurstHighAsinh()
+    {
+        MeasurePerformance("Asinh", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AsinhHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Asinh")]
     public void CoreAsinh()

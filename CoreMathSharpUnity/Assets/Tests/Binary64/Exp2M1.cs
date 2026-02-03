@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("Exp2M1")]
+    public void BurstLowExp2M1()
+    {
+        MeasurePerformance("Exp2M1", () =>
+        {
+            Result = BurstMath.Exp2M1Low(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1")]
+    public void BurstMediumExp2M1()
+    {
+        MeasurePerformance("Exp2M1", () =>
+        {
+            Result = BurstMath.Exp2M1Medium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1")]
+    public void BurstHighExp2M1()
+    {
+        MeasurePerformance("Exp2M1", () =>
+        {
+            Result = BurstMath.Exp2M1High(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1")]
     public void CoreExp2M1()
     {
         MeasurePerformance("Exp2M1", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("Exp2M1")]
+    public void BurstLowExp2M1()
+    {
+        MeasurePerformance("Exp2M1", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.Exp2M1Low(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1")]
+    public void BurstMediumExp2M1()
+    {
+        MeasurePerformance("Exp2M1", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.Exp2M1Medium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Exp2M1")]
+    public void BurstHighExp2M1()
+    {
+        MeasurePerformance("Exp2M1", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.Exp2M1High(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("Exp2M1")]
     public void CoreExp2M1()

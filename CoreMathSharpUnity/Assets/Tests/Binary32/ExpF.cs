@@ -30,6 +30,36 @@ public partial class UnityBenchmark
 
     [Test, Performance]
     [Category("ExpF")]
+    public void BurstLowExpF()
+    {
+        MeasurePerformance("ExpF", () =>
+        {
+            ResultF = BurstMathF.ExpLow(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpF")]
+    public void BurstMediumExpF()
+    {
+        MeasurePerformance("ExpF", () =>
+        {
+            ResultF = BurstMathF.ExpMedium(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpF")]
+    public void BurstHighExpF()
+    {
+        MeasurePerformance("ExpF", () =>
+        {
+            ResultF = BurstMathF.ExpHigh(XF);
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpF")]
     public void CoreExpF()
     {
         MeasurePerformance("ExpF", () =>
@@ -69,6 +99,57 @@ public partial class UnityMacroBenchmark
             foreach (var x in XF)
             {
                 sum += math.exp(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpF")]
+    public void BurstLowExpF()
+    {
+        MeasurePerformance("ExpF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ExpLow(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpF")]
+    public void BurstMediumExpF()
+    {
+        MeasurePerformance("ExpF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ExpMedium(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("ExpF")]
+    public void BurstHighExpF()
+    {
+        MeasurePerformance("ExpF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += BurstMathF.ExpHigh(x);
             }
 
             ResultF = sum;

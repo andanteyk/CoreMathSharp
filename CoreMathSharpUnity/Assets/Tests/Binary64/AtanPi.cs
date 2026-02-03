@@ -8,6 +8,36 @@ public partial class UnityBenchmark
 {
     [Test, Performance]
     [Category("AtanPi")]
+    public void BurstLowAtanPi()
+    {
+        MeasurePerformance("AtanPi", () =>
+        {
+            Result = BurstMath.AtanPiLow(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPi")]
+    public void BurstMediumAtanPi()
+    {
+        MeasurePerformance("AtanPi", () =>
+        {
+            Result = BurstMath.AtanPiMedium(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPi")]
+    public void BurstHighAtanPi()
+    {
+        MeasurePerformance("AtanPi", () =>
+        {
+            Result = BurstMath.AtanPiHigh(X);
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPi")]
     public void CoreAtanPi()
     {
         MeasurePerformance("AtanPi", () =>
@@ -19,6 +49,57 @@ public partial class UnityBenchmark
 
 public partial class UnityMacroBenchmark
 {
+    [Test, Performance]
+    [Category("AtanPi")]
+    public void BurstLowAtanPi()
+    {
+        MeasurePerformance("AtanPi", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AtanPiLow(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPi")]
+    public void BurstMediumAtanPi()
+    {
+        MeasurePerformance("AtanPi", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AtanPiMedium(x);
+            }
+
+            Result = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("AtanPi")]
+    public void BurstHighAtanPi()
+    {
+        MeasurePerformance("AtanPi", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in X)
+            {
+                sum += BurstMath.AtanPiHigh(x);
+            }
+
+            Result = sum;
+        });
+    }
+
     [Test, Performance]
     [Category("AtanPi")]
     public void CoreAtanPi()
