@@ -1,11 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System;
-using System.Linq;
-using CoreMathSharp;
-
-ParseLiteral();
+﻿using System;
+using BenchmarkDotNet.Running;
+using CoreMathSharp.Benchmarks;
 
 
+BenchmarkRunner.Run<StrictMathBenchmark>(args: Environment.GetCommandLineArgs());
+
+BenchmarkRunner.Run<StrictMathMacroBenchmark>(args: Environment.GetCommandLineArgs());
+
+
+
+/*
 void ParseLiteral()
 {
     while (true)
@@ -23,3 +27,4 @@ void ParseLiteral()
         Console.WriteLine();
     }
 }
+//*/

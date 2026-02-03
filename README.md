@@ -92,6 +92,7 @@ The following functions are available:
 |            Atanh |    ✅ |     ✅ |
 |           AtanPi |    ✅ |     ✅ |
 |             Cbrt |    ✅ |     ✅ |
+|         Compound |    ✅ |        |
 |         CopySign |    ✅ |     ✅ |
 |              Cos |    ✅ |     ✅ |
 |             Cosh |    ✅ |     ✅ |
@@ -161,7 +162,7 @@ An environment where clang can run (WSL) is required.
 ### Run Benchmarks
 
 ```
-dotnet run -c Release --project CoreMathSharp.Benchmarks
+dotnet run -c Release --project CoreMathSharp.Benchmarks -f net10.0
 ```
 
 ### Publish
@@ -187,5 +188,5 @@ I would like to take this opportunity to express my gratitude.
 * More accurate testing
     * measure code coverage
 * Add Document Comment
-
+* Fix math-dependent functions
 
