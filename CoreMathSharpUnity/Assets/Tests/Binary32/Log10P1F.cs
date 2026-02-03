@@ -1,0 +1,94 @@
+﻿using CoreMathSharp;
+using NUnit.Framework;
+using Unity.Mathematics;
+using Unity.PerformanceTesting;
+using UnityEngine;
+
+namespace CoreMathSharpUnity.Tests;
+
+public partial class UnityBenchmark
+{
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void UnityLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            ResultF = Mathf.Log10(XF + 1.0f);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void MathematicsLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            ResultF = math.log10(XF + 1.0f);
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void CoreLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            ResultF = StrictMathF.Log10P1(XF);
+        });
+    }
+}
+
+public partial class UnityMacroBenchmark
+{
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void UnityLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += Mathf.Log10(x + 1.0f);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void MathematicsLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += math.log10(x + 1.0f);
+            }
+
+            ResultF = sum;
+        });
+    }
+
+    [Test, Performance]
+    [Category("Log10P1F")]
+    public void CoreLog10P1F()
+    {
+        MeasurePerformance("Log10P1F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += StrictMathF.Log10P1(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+}

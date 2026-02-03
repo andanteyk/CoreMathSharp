@@ -1,0 +1,38 @@
+﻿using CoreMathSharp;
+using NUnit.Framework;
+using Unity.PerformanceTesting;
+
+namespace CoreMathSharpUnity.Tests;
+
+public partial class UnityBenchmark
+{
+    [Test, Performance]
+    [Category("AsinhF")]
+    public void CoreAsinhF()
+    {
+        MeasurePerformance("AsinhF", () =>
+        {
+            ResultF = StrictMathF.Asinh(XF);
+        });
+    }
+}
+
+public partial class UnityMacroBenchmark
+{
+    [Test, Performance]
+    [Category("AsinhF")]
+    public void CoreAsinhF()
+    {
+        MeasurePerformance("AsinhF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += StrictMathF.Asinh(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+}

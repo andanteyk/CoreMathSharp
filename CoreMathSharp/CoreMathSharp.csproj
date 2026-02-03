@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>14</LangVersion>
     <PackageId>AndanteSoft.CoreMathSharp</PackageId>
-    <PackageVersion>0.0.2.5</PackageVersion>
+    <PackageVersion>0.0.2.6</PackageVersion>
     <Authors>Andante</Authors>
     <Description></Description>
     <Copyright>Copyright (c) Andante 2026</Copyright>
