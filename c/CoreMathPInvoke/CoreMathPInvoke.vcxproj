@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{99d9425e-98d8-4cf5-9afe-955773ceaf1c}</ProjectGuid>
+    <RootNamespace>CoreMathPInvoke</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;COREMATHPINVOKE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;COREMATHPINVOKE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;COREMATHPINVOKE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;COREMATHPINVOKE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="acos.cpp" />
+    <ClCompile Include="acosh.cpp" />
+    <ClCompile Include="acoshf.cpp" />
+    <ClCompile Include="acosf.cpp" />
+    <ClCompile Include="acospi.cpp" />
+    <ClCompile Include="acospif.cpp" />
+    <ClCompile Include="asin.cpp" />
+    <ClCompile Include="asinf.cpp" />
+    <ClCompile Include="asinh.cpp" />
+    <ClCompile Include="asinhf.cpp" />
+    <ClCompile Include="asinpi.cpp" />
+    <ClCompile Include="asinpif.cpp" />
+    <ClCompile Include="atan.cpp" />
+    <ClCompile Include="atan2.cpp" />
+    <ClCompile Include="atan2f.cpp" />
+    <ClCompile Include="atan2pi.cpp" />
+    <ClCompile Include="atan2pif.cpp" />
+    <ClCompile Include="atanf.cpp" />
+    <ClCompile Include="atanh.cpp" />
+    <ClCompile Include="atanhf.cpp" />
+    <ClCompile Include="atanpi.cpp" />
+    <ClCompile Include="atanpif.cpp" />
+    <ClCompile Include="cbrt.cpp" />
+    <ClCompile Include="cbrtf.cpp" />
+    <ClCompile Include="compoundf.cpp" />
+    <ClCompile Include="cos.cpp" />
+    <ClCompile Include="cosf.cpp" />
+    <ClCompile Include="cosh.cpp" />
+    <ClCompile Include="coshf.cpp" />
+    <ClCompile Include="cospi.cpp" />
+    <ClCompile Include="cospif.cpp" />
+    <ClCompile Include="erf.cpp" />
+    <ClCompile Include="erfc.cpp" />
+    <ClCompile Include="erfcf.cpp" />
+    <ClCompile Include="erff.cpp" />
+    <ClCompile Include="exp.cpp" />
+    <ClCompile Include="exp10.cpp" />
+    <ClCompile Include="exp10f.cpp" />
+    <ClCompile Include="exp10m1.cpp" />
+    <ClCompile Include="exp10m1f.cpp" />
+    <ClCompile Include="exp2.cpp" />
+    <ClCompile Include="exp2f.cpp" />
+    <ClCompile Include="exp2m1.cpp" />
+    <ClCompile Include="exp2m1f.cpp" />
+    <ClCompile Include="expf.cpp" />
+    <ClCompile Include="expm1.cpp" />
+    <ClCompile Include="expm1f.cpp" />
+    <ClCompile Include="hypot.cpp" />
+    <ClCompile Include="hypotf.cpp" />
+    <ClCompile Include="lgamma.cpp" />
+    <ClCompile Include="lgammaf.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="log10.cpp" />
+    <ClCompile Include="log10f.cpp" />
+    <ClCompile Include="log10p1.cpp" />
+    <ClCompile Include="log10p1f.cpp" />
+    <ClCompile Include="log1p.cpp" />
+    <ClCompile Include="log1pf.cpp" />
+    <ClCompile Include="log2.cpp" />
+    <ClCompile Include="log2f.cpp" />
+    <ClCompile Include="log2p1.cpp" />
+    <ClCompile Include="log2p1f.cpp" />
+    <ClCompile Include="logf.cpp" />
+    <ClCompile Include="pow.cpp" />
+    <ClCompile Include="powf.cpp" />
+    <ClCompile Include="rsqrt.cpp" />
+    <ClCompile Include="rsqrtf.cpp" />
+    <ClCompile Include="sin.cpp" />
+    <ClCompile Include="sincos.cpp" />
+    <ClCompile Include="sincosf.cpp" />
+    <ClCompile Include="sinf.cpp" />
+    <ClCompile Include="sinh.cpp" />
+    <ClCompile Include="sinhf.cpp" />
+    <ClCompile Include="sinpi.cpp" />
+    <ClCompile Include="sinpif.cpp" />
+    <ClCompile Include="special.cpp" />
+    <ClCompile Include="tan.cpp" />
+    <ClCompile Include="tanf.cpp" />
+    <ClCompile Include="tanh.cpp" />
+    <ClCompile Include="tanhf.cpp" />
+    <ClCompile Include="tanpi.cpp" />
+    <ClCompile Include="tanpif.cpp" />
+    <ClCompile Include="tgamma.cpp" />
+    <ClCompile Include="tgammaf.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

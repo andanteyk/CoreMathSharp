@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="CoreMathPInvoke/CoreMathPInvoke.vcxproj" Id="99d9425e-98d8-4cf5-9afe-955773ceaf1c" />
+</Solution>
