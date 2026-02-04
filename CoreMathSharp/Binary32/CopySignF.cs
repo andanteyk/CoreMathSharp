@@ -6,6 +6,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.CopySign(double, double)"/>
     public static float CopySign(float magnitude, float sign)
     {
 #if NETCOREAPP3_0_OR_GREATER

@@ -11,6 +11,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Pow(double, double)"/>
     public static float Pow(float x, float y)
     {
 

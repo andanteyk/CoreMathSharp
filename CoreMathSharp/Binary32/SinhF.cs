@@ -12,6 +12,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Sinh(double)"/>
     public static float Sinh(float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

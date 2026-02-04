@@ -10,6 +10,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.FusedMultiplyAdd(double, double, double)"/>
     public static float FusedMultiplyAdd(float x, float y, float z)
     {
 #if NETCOREAPP3_0_OR_GREATER

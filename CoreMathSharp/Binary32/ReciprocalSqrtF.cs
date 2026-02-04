@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.ReciprocalSqrt(double)"/>
     public static float ReciprocalSqrt(float x)
     {
         double xd = x;

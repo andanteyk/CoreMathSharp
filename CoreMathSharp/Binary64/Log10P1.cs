@@ -5,6 +5,15 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the base-10 logarithm of a value plus one.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns log_10(x + 1).
+    /// This method is more accurate than simply Log10(x + 1).
+    /// </remarks>
     public static double Log10P1(double x)
     {
 

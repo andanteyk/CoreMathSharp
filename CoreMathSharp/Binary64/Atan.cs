@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-tangent of a value.
+    /// </summary>
+    /// <returns>[-PI/2, PI/2]</returns>
+    /// <remarks>
+    /// Mathematically, if x = tan(θ), then θ = atan(x).
+    /// </remarks>
     public static double Atan(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

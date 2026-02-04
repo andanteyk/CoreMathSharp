@@ -6,6 +6,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the base-10 logarithm of a value.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns log_10(x).
+    /// </remarks>
     public static double Log10(double x)
     {
 

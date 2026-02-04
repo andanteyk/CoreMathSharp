@@ -4,6 +4,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the cube-root of a value.
+    /// </summary>
+    /// <returns>[-∞, ∞]</returns>
+    /// <remarks>
+    /// Mathematically, returns pow(x, 1.0 / 3).
+    /// </remarks>
     public static double Cbrt(double x)
     {
         ReadOnlySpan<double> escale = [1.0, 1.2599210498948732, 1.5874010519681996];

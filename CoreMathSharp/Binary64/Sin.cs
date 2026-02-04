@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the sine of a value.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns>[-1, 1]</returns>
+    /// <remarks>
+    /// </remarks>
     public static double Sin(double x)
     {
 

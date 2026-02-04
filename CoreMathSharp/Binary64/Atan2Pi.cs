@@ -5,6 +5,15 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-tangent for the quotient of two values and divides the result by <see cref="Math.PI" />.
+    /// </summary>
+    /// <param name="y">The y-coordinate of a point.</param>
+    /// <param name="x">The x-coordinate of a point.</param>
+    /// <returns>[-1, 1]</returns>
+    /// <remarks>
+    /// Mathematically, returns atan2(y, x) / PI.
+    /// </remarks>
     public static double Atan2Pi(double y, double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

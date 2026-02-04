@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-cosine of a value and divides the result by <see cref="Math.PI"/>.
+    /// </summary>
+    /// <returns>[0, 1]</returns>
+    /// <remarks>
+    /// Mathematically, returns acos(x) / PI.
+    /// </remarks>
     public static double AcosPi(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

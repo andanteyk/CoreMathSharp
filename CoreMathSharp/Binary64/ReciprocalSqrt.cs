@@ -2,6 +2,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the reciprocal square root of a value.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns 1 / sqrt(x).
+    /// </remarks>
     public static double ReciprocalSqrt(double x)
     {
 

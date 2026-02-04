@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.LGamma(double)"/>
     public static (float value, int signGamma) LGamma(float x)
     {
 

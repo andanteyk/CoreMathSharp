@@ -11,6 +11,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the fused multiply-add of three values.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <param name="z"></param>
+    /// <returns>x * y + z, but the result is rounded only once</returns>
     public static double FusedMultiplyAdd(double x, double y, double z)
     {
 #if NETCOREAPP3_0_OR_GREATER

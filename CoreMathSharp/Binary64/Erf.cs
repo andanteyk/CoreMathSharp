@@ -5,6 +5,10 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the error function of a value.
+    /// </summary>
+    /// <returns></returns>
     public static double Erf(double x)
     {
         const double Ch = 1.1283791670955126;

@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Cbrt(double)"/>
     public static float Cbrt(float x)
     {
         ReadOnlySpan<double> escale = [1.0, 1.2599210498948732, 1.5874010519681996];

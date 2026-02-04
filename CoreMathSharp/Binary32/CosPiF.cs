@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.CosPi(double)"/>
     public static float CosPi(float x)
     {
         ReadOnlySpan<double> sn = [1.142904749427467e-11, -2.4881631961681012e-34, 1.625023320396236e-57];

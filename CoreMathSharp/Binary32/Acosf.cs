@@ -5,6 +5,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Acos(double)"/>
     public static float Acos(float x)
     {
         static float asSpecial(float x)

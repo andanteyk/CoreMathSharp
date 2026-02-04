@@ -12,6 +12,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.TGamma(double)"/>
     public static float TGamma(float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

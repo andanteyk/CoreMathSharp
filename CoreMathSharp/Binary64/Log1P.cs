@@ -11,6 +11,15 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the natural (base-E) logarithm of a value plus one.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns log_e(x + 1).
+    /// This method is more accurate than simply Log(x + 1).
+    /// </remarks>
     public static double Log1P(double x)
     {
 

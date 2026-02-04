@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Exp2(double)"/>
     public static float Exp2(float x)
     {
         static float asSpecial(float x)

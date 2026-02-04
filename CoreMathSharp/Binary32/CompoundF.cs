@@ -11,6 +11,16 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <summary>
+    /// Computes compound interest.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns pow(x + 1, y).
+    /// This method is more accurate than simply pow(x + 1, y).
+    /// </remarks>
     public static float Compound(float x, float y)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

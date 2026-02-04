@@ -6,6 +6,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the natural (base-E) logarithm of a value.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// If you want to calculate log to any base, use log(x) / log(base).
+    /// </remarks>
     public static double Log(double x)
     {
 

@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Tanh(double)"/>
     public static float Tanh(float x)
     {
         double z = x;

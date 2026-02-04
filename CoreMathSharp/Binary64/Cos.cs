@@ -866,7 +866,10 @@ public static partial class StrictMath
 
 
 
-
+    /// <summary>
+    /// Computes the cosine of a value.
+    /// </summary>
+    /// <returns>[-1, 1]</returns>
     public static double Cos(double x)
     {
         ReadOnlySpan<ulong> T = [0x28be60db9391054a, 0x7f09d5f47d4d3770, 0x36d8a5664f10e410, 0x7f9458eaf7aef158, 0x6dc91b8e909374b8, 0x1924bba82746487, 0x3f877ac72c4a69cf, 0xba208d7d4baed121, 0x3a671c09ad17df90, 0x4e64758e60d4ce7d, 0x272117e2ef7e4a0e, 0xc7fe25fff7816603, 0xfbcbc462d6829b47, 0xdb4d9fb3c9f2c26d, 0xd3d18fd9a797fa8b, 0x5d49eeb1faf97c5e, 0xcf41ce7de294a4ba, 0x9afed7ec47e35742, 0x1580cc11bf1edaea, 0xfc33ef0826bd0d87,];

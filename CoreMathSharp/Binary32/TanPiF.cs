@@ -12,6 +12,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.TanPi(double)"/>
     public static float TanPi(float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

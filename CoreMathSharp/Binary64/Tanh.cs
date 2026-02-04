@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the hyperbolic tangent of a value.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// </remarks>
     public static double Tanh(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -476,6 +476,15 @@ public static partial class StrictMath
         }
     }
 
+    /// <summary>
+    /// Computes the arc-tangent of the quotient of two values.
+    /// </summary>
+    /// <param name="y">The y-coordinate of a point.</param>
+    /// <param name="x">The x-coordinate of a point.</param>
+    /// <returns>[-PI, PI]</returns>
+    /// <remarks>
+    /// Mathematically, returns atan(y / x).
+    /// </remarks>
     public static double Atan2(double y, double x)
     {
         const ulong Mask = 0x7ffffffffffffffful;

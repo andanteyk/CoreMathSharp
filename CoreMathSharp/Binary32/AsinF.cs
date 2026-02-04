@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Asin(double)"/>
     public static float Asin(float x)
     {
         static float asSpecial(float x)

@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-sine of a value.
+    /// </summary>
+    /// <returns>[-PI/2, PI/2]</returns>
+    /// <remarks>
+    /// Mathematically, if x = sin(θ), then θ = asin(x).
+    /// </remarks>
     public static double Asin(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.AtanPi(double)"/>
     public static float AtanPi(float x)
     {
         uint t = Polyfill.SingleToUInt32Bits(x);

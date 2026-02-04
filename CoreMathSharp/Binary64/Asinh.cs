@@ -6,6 +6,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the hyperbolic arc-sine of a value.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, if x = sinh(θ), then θ = asinh(x).
+    /// </remarks>
     public static double Asinh(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

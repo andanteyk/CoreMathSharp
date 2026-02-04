@@ -4,6 +4,15 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the hypotenuse given two values representing the lengths of the shorter sides in a right-angled triangle.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns sqrt(x * x + y * y), but without overflow.
+    /// </remarks>
     public static double Hypot(double x, double y)
     {
 

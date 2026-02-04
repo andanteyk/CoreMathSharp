@@ -5,6 +5,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the sine and cosine of a value.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns>sin is the sine [-1, 1], cos is the cosine [-1, 1]</returns>
+    /// <remarks>
+    /// Mathematically, returns (sin(x), cos(x)).
+    /// </remarks>
     public static (double sin, double cos) SinCos(double x)
     {
 

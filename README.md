@@ -1,6 +1,6 @@
 # CoreMathSharp
 
-Accurate, portable, and deterministic implementations of mathematical functions
+Perfectly accurate, portable, and deterministic implementations of mathematical functions
 
 <a href="https://www.nuget.org/packages/AndanteSoft.CoreMathSharp">![NuGet Version](https://img.shields.io/nuget/vpre/AndanteSoft.CoreMathSharp)</a>
 <a href="LICENSE.md">![GitHub License](https://img.shields.io/github/license/andanteyk/CoreMathSharp)</a>
@@ -187,6 +187,5 @@ I would like to take this opportunity to express my gratitude.
     * Compare with P/Invoke
 * More accurate testing
     * measure code coverage
-* Add Document Comment
 * Fix math-dependent functions
 

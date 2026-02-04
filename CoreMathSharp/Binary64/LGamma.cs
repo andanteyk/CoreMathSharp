@@ -11,6 +11,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the natural logarithm of the absolute value of the gamma function.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns>value is log_e |Γ(x)|, signGamma is the sign of the Γ(x)</returns>
+    /// <remarks>
+    /// Mathematically, returns (log_e |Γ(x)|, sign(Γ(x))).
+    /// </remarks>
     public static (double value, int signGamma) LGamma(double x)
     {
 

@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-tangent of a value and divides the result by <see cref="Math.PI" />.
+    /// </summary>
+    /// <returns>[-0.5, 0.5]</returns>
+    /// <remarks>
+    /// Mathematically, returns atan(x) / PI.
+    /// </remarks>
     public static double AtanPi(double x)
     {
         const double OneOverPiH = 0.31830988618379069;

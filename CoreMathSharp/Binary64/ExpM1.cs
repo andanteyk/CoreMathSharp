@@ -12,6 +12,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes <see cref="Math.E"/> raised to a given power and subtracts one.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns exp(x) - 1.
+    /// This method is more accurate than simply Exp(x) - 1.
+    /// </remarks>
     public static double ExpM1(double x)
     {
 

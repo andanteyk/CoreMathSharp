@@ -5,6 +5,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Atan2(double, double)"/>
     public static float Atan2(float y, float x)
     {
 

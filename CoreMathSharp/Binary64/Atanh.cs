@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the hyperbolic arc-tangent of a value.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, if x = tanh(θ), then θ = atanh(x).
+    /// </remarks>
     public static double Atanh(double x)
     {
 

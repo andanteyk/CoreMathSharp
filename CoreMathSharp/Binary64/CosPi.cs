@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the cosine of a value that has been multipled by <see cref="Math.PI" />.
+    /// </summary>
+    /// <returns>[-1, 1]</returns>
+    /// <remarks>
+    /// Mathematically, returns cos(x * PI).
+    /// </remarks>
     public static double CosPi(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

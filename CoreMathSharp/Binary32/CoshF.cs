@@ -11,6 +11,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Cosh(double)"/>
     public static float Cosh(float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -6,6 +6,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Abs(double)"/>
     public static float Abs(float x)
     {
 #if NETCOREAPP3_0_OR_GREATER

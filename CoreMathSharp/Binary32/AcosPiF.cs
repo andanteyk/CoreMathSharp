@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.AcosPi(double)"/>
     public static float AcosPi(float x)
     {
         float ax = Abs(x);

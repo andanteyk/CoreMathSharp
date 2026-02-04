@@ -12,6 +12,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes 2 raised to a given power.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns pow(2, x).
+    /// </remarks>
     public static double Exp2(double x)
     {
 

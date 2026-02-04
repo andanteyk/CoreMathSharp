@@ -11,6 +11,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Exp10(double)"/>
     public static float Exp10(float x)
     {
 

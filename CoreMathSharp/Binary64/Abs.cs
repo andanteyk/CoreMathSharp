@@ -6,6 +6,10 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the absolute of a value.
+    /// </summary>
+    /// <returns>[0, ∞]</returns>
     public static double Abs(double x)
     {
 #if NETCOREAPP3_0_OR_GREATER

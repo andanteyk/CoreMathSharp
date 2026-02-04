@@ -12,6 +12,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes 10 raised to a given power.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns pow(10, x).
+    /// </remarks>
     public static double Exp10(double x)
     {
 

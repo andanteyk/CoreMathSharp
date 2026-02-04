@@ -6,6 +6,12 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Copies the sign of a value to the sign of another value.
+    /// </summary>
+    /// <param name="magnitude">The value whose magnitude is used in the result.</param>
+    /// <param name="sign">The value whose sign is used in the result.</param>
+    /// <returns>±magnitude, sign is the same as sign</returns>
     public static double CopySign(double magnitude, double sign)
     {
 #if NETCOREAPP3_0_OR_GREATER

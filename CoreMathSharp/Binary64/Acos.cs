@@ -11,6 +11,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-cosine of a value.
+    /// </summary>
+    /// <returns>[0, PI]</returns>
+    /// <remarks>
+    /// Mathematically, if x = cos(θ), then θ = acos(x).
+    /// </remarks>
     public static double Acos(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

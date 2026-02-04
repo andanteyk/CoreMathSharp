@@ -6,6 +6,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the hyperbolic arc-cosine of a value.
+    /// </summary>
+    /// <returns>[0, ∞]</returns>
+    /// <remarks>
+    /// Mathematically, if x = cosh(θ), then θ = acosh(x).
+    /// </remarks>
     public static double Acosh(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

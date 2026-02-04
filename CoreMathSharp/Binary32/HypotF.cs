@@ -2,6 +2,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Hypot(double, double)"/>
     public static float Hypot(float x, float y)
     {
         float ax = Abs(x), ay = Abs(y);

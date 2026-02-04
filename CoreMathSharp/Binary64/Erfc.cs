@@ -12,6 +12,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the complementary error function of a value.
+    /// </summary>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns 1 - erf(x).
+    /// </remarks>
     public static double Erfc(double x)
     {
 

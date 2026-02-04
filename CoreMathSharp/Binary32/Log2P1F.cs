@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Log2P1(double)"/>
     public static float Log2P1(float x)
     {
 

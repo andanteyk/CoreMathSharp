@@ -720,7 +720,15 @@ public static partial class StrictMath
 
 
 
-
+    /// <summary>
+    /// Computes a value raised to a given power.
+    /// </summary>
+    /// <param name="x">The value that is raised to the power of x.</param>
+    /// <param name="y">The power to which x is raised.</param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns x^y.
+    /// </remarks>
     public static double Pow(double x, double y)
     {
         const int PowIteration = 15;

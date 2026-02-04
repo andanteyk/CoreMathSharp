@@ -5,6 +5,13 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the arc-sine of a value and divides the result by <see cref="Math.PI"/>.
+    /// </summary>
+    /// <returns>[-0.5, 0.5]</returns>
+    /// <remarks>
+    /// Mathematically, returns asin(x) / PI.
+    /// </remarks>
     public static double AsinPi(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

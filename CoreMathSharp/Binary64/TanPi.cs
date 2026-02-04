@@ -5,6 +5,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the tangent of a value that has been multipled by <see cref="Math.PI"/>.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns tan(x * PI).
+    /// </remarks>
     public static double TanPi(double x)
     {
 

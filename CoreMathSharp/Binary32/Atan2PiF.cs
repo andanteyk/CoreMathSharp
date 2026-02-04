@@ -5,6 +5,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Atan2Pi(double, double)"/>
     public static float Atan2Pi(float y, float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

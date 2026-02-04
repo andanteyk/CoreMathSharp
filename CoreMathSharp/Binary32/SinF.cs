@@ -12,6 +12,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Sin(double)"/>
     public static float Sin(float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

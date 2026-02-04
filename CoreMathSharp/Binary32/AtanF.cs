@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Atan(double)"/>
     public static float Atan(float x)
     {
         const double pi2 = 1.5707963267948966;

@@ -5,6 +5,14 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the sine of a value that has been multiplied by <see cref="Math.PI" />.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns>[-1, 1]</returns>
+    /// <remarks>
+    /// Mathematically, returns sin(x * PI).
+    /// </remarks>
     public static double SinPi(double x)
     {
 

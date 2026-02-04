@@ -5,6 +5,10 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the hyperbolic cosine of a value.
+    /// </summary>
+    /// <returns></returns>
     public static double Cosh(double x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -4,6 +4,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.Exp2M1(double)"/>
     public static float Exp2M1(float x)
     {
         ReadOnlySpan<float> q = [3.4028234663852886e+38f, 3.4028234663852886e+38f, 3.4028234663852886e+38f, 1.0141204801825835e+31f, -1.0f, 1.4901161193847656e-08f];

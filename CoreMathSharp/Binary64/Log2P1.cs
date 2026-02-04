@@ -6,6 +6,15 @@ namespace CoreMathSharp;
 
 public static partial class StrictMath
 {
+    /// <summary>
+    /// Computes the base-2 logarithm of a value plus one.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    /// <remarks>
+    /// Mathematically, returns log_2(x + 1).
+    /// This method is more accurate than simply Log2(x + 1).
+    /// </remarks>
     public static double Log2P1(double x)
     {
 

@@ -12,6 +12,7 @@ namespace CoreMathSharp;
 
 public static partial class StrictMathF
 {
+    /// <inheritdoc cref="StrictMath.SinCos(double)"/>
     public static (float sin, float cos) SinCos(float x)
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
