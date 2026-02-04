@@ -15,6 +15,18 @@ public partial class UnityBenchmark
             Result = StrictMath.Erfc(X);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Erfc")]
+    public void PInvokeErfc()
+    {
+        MeasurePerformance("Erfc", () =>
+        {
+            Result = PInvoke.PInvoke.Erfc(X);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -35,4 +47,23 @@ public partial class UnityMacroBenchmark
             Result = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Erfc")]
+    public void PInvokeErfc()
+    {
+        MeasurePerformance("Erfc", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.Erfc(x);
+            }
+
+            Result = sum;
+        });
+    }
+#endif
 }

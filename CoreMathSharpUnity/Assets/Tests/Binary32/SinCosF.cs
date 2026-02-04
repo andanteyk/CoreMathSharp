@@ -72,6 +72,19 @@ public partial class UnityBenchmark
             ResultF = sin + cos;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void PInvokeSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            PInvoke.PInvoke.SinCosF(XF, out var sin, out var cos);
+            ResultF = sin + cos;
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -182,4 +195,24 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("SinCosF")]
+    public void PInvokeSinCosF()
+    {
+        MeasurePerformance("SinCosF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                PInvoke.PInvoke.SinCosF(x, out var sin, out var cos);
+                sum += sin + cos;
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

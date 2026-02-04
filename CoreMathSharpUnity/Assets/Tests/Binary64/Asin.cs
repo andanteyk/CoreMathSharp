@@ -45,6 +45,18 @@ public partial class UnityBenchmark
             Result = StrictMath.Asin(X);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Asin")]
+    public void PInvokeAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            Result = PInvoke.PInvoke.Asin(X);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -116,4 +128,23 @@ public partial class UnityMacroBenchmark
             Result = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Asin")]
+    public void PInvokeAsin()
+    {
+        MeasurePerformance("Asin", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.Asin(x);
+            }
+
+            Result = sum;
+        });
+    }
+#endif
 }

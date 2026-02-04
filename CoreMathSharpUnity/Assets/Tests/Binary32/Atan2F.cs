@@ -67,6 +67,18 @@ public partial class UnityBenchmark
             ResultF = StrictMathF.Atan2(YF, XF);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Atan2F")]
+    public void PInvokeAtan2F()
+    {
+        MeasurePerformance("Atan2F", () =>
+        {
+            ResultF = PInvoke.PInvoke.Atan2F(YF, XF);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -172,4 +184,23 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Atan2F")]
+    public void PInvokeAtan2F()
+    {
+        MeasurePerformance("Atan2F", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += PInvoke.PInvoke.Atan2F(YF[i], XF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

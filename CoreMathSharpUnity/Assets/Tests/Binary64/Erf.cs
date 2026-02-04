@@ -15,6 +15,18 @@ public partial class UnityBenchmark
             Result = StrictMath.Erf(X);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Erf")]
+    public void PInvokeErf()
+    {
+        MeasurePerformance("Erf", () =>
+        {
+            Result = PInvoke.PInvoke.Erf(X);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -35,4 +47,23 @@ public partial class UnityMacroBenchmark
             Result = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Erf")]
+    public void PInvokeErf()
+    {
+        MeasurePerformance("Erf", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.Erf(x);
+            }
+
+            Result = sum;
+        });
+    }
+#endif
 }

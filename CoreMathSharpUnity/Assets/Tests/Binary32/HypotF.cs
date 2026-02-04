@@ -67,6 +67,18 @@ public partial class UnityBenchmark
             ResultF = StrictMathF.Hypot(XF, YF);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("HypotF")]
+    public void PInvokeHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            ResultF = PInvoke.PInvoke.HypotF(XF, YF);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -172,4 +184,23 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("HypotF")]
+    public void PInvokeHypotF()
+    {
+        MeasurePerformance("HypotF", () =>
+        {
+            float sum = 0.0f;
+
+            for (int i = 0; i < XF.Length; i++)
+            {
+                sum += PInvoke.PInvoke.HypotF(XF[i], YF[i]);
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

@@ -67,6 +67,18 @@ public partial class UnityBenchmark
             ResultF = StrictMathF.ReciprocalSqrt(XF);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void PInvokeReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            ResultF = PInvoke.PInvoke.ReciprocalSqrtF(XF);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -172,4 +184,23 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("ReciprocalSqrtF")]
+    public void PInvokeReciprocalSqrtF()
+    {
+        MeasurePerformance("ReciprocalSqrtF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.ReciprocalSqrtF(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

@@ -67,6 +67,18 @@ public partial class UnityBenchmark
             ResultF = StrictMathF.Log2(XF);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Log2F")]
+    public void PInvokeLog2F()
+    {
+        MeasurePerformance("Log2F", () =>
+        {
+            ResultF = PInvoke.PInvoke.Log2F(XF);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -172,4 +184,24 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Log2F")]
+    public void PInvokeLog2F()
+    {
+        MeasurePerformance("Log2F", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.Log2F(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

@@ -15,6 +15,18 @@ public partial class UnityBenchmark
             ResultF = StrictMathF.TGamma(XF);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("TGammaF")]
+    public void PInvokeTGammaF()
+    {
+        MeasurePerformance("TGammaF", () =>
+        {
+            ResultF = PInvoke.PInvoke.TGammaF(XF);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -35,4 +47,23 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("TGammaF")]
+    public void PInvokeTGammaF()
+    {
+        MeasurePerformance("TGammaF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.TGammaF(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

@@ -45,6 +45,18 @@ public partial class UnityBenchmark
             ResultF = StrictMathF.Asinh(XF);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("AsinhF")]
+    public void PInvokeAsinhF()
+    {
+        MeasurePerformance("AsinhF", () =>
+        {
+            ResultF = PInvoke.PInvoke.AsinhF(XF);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -116,4 +128,23 @@ public partial class UnityMacroBenchmark
             ResultF = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("AsinhF")]
+    public void PInvokeAsinhF()
+    {
+        MeasurePerformance("AsinhF", () =>
+        {
+            float sum = 0.0f;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.AsinhF(x);
+            }
+
+            ResultF = sum;
+        });
+    }
+#endif
 }

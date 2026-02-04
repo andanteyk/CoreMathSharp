@@ -45,6 +45,18 @@ public partial class UnityBenchmark
             Result = StrictMath.Atan(X);
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Atan")]
+    public void PInvokeAtan()
+    {
+        MeasurePerformance("Atan", () =>
+        {
+            Result = PInvoke.PInvoke.Atan(X);
+        });
+    }
+#endif
 }
 
 public partial class UnityMacroBenchmark
@@ -116,4 +128,23 @@ public partial class UnityMacroBenchmark
             Result = sum;
         });
     }
+
+#if PINVOKE_ENABLED
+    [Test, Performance]
+    [Category("Atan")]
+    public void PInvokeAtan()
+    {
+        MeasurePerformance("Atan", () =>
+        {
+            double sum = 0.0;
+
+            foreach (var x in XF)
+            {
+                sum += PInvoke.PInvoke.Atan(x);
+            }
+
+            Result = sum;
+        });
+    }
+#endif
 }
