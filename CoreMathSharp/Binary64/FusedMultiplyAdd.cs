@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.CompilerServices;
 
 #if NETCOREAPP3_0_OR_GREATER
@@ -18,6 +17,7 @@ public static partial class StrictMath
     /// <param name="y"></param>
     /// <param name="z"></param>
     /// <returns>x * y + z, but the result is rounded only once</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static double FusedMultiplyAdd(double x, double y, double z)
     {
 #if NETCOREAPP3_0_OR_GREATER
@@ -34,7 +34,208 @@ public static partial class StrictMath
 #endif
 
 
-        /*
+
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static (ulong mantissa, int exponent, int sign) normalize(double x)
+        {
+            ulong ix = Polyfill.DoubleToUInt64Bits(x);
+            int e = (int)(ix >> 52) & 0x7ff;
+            int sign = (int)(ix >> 63);
+
+            if (e == 0)
+            {
+                ix = Polyfill.DoubleToUInt64Bits(x * 9223372036854775808.0);
+                e = (int)(ix >> 52) & 0x7ff;
+                e = e != 0 ? e - 63 : 0x800;
+            }
+
+            ix &= (1ul << 52) - 1;
+            ix |= (1ul << 52);
+            ix <<= 1;
+            e -= 0x3ff + 52 + 1;
+            return (ix, e, sign);
+        }
+
+        // https://git.musl-libc.org/cgit/musl/tree/src/math/fmaf.c
+        static double Fallback(double x, double y, double z)
+        {
+            const int ZeroInfNaN = 0x7ff - 0x3ff - 52 - 1;
+
+            var nx = normalize(x);
+            var ny = normalize(y);
+            var nz = normalize(z);
+
+            if (nx.exponent >= ZeroInfNaN || ny.exponent >= ZeroInfNaN)
+            {
+                return x * y + z;
+            }
+            if (nz.exponent >= ZeroInfNaN)
+            {
+                if (nz.exponent > ZeroInfNaN)
+                {
+                    return x * y;
+                }
+                return z;
+            }
+
+            ulong rhi = Polyfill.BigMul(nx.mantissa, ny.mantissa, out ulong rlo);
+            ulong zhi, zlo;
+
+            int e = nx.exponent + ny.exponent;
+            int d = nz.exponent - e;
+
+            if (d > 0)
+            {
+                if (d < 64)
+                {
+                    zlo = nz.mantissa << d;
+                    zhi = nz.mantissa >> -d;
+                }
+                else
+                {
+                    zlo = 0;
+                    zhi = nz.mantissa;
+                    e = nz.exponent - 64;
+                    d -= 64;
+
+                    if (d != 0)
+                    {
+                        if (d < 64)
+                        {
+                            rlo = rhi << -d | rlo >> d | (rlo << -d != 0 ? 1ul : 0ul);
+                            rhi = rhi >> d;
+                        }
+                        else
+                        {
+                            rlo = 1;
+                            rhi = 0;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                zhi = 0;
+                d = -d;
+
+                if (d == 0)
+                {
+                    zlo = nz.mantissa;
+                }
+                else if (d < 64)
+                {
+                    zlo = nz.mantissa >> d | (nz.mantissa << -d != 0 ? 1ul : 0ul);
+                }
+                else
+                {
+                    zlo = 1;
+                }
+            }
+
+            int sign = nx.sign ^ ny.sign;
+            bool sameSign = (sign ^ nz.sign) == 0;
+            bool nonzero = true;
+
+            if (sameSign)
+            {
+                rlo += zlo;
+                rhi += zhi + (rlo < zlo ? 1ul : 0ul);
+            }
+            else
+            {
+                ulong t = rlo;
+                rlo -= zlo;
+                rhi = rhi - zhi - (t < rlo ? 1ul : 0ul);
+
+                if (rhi >> 63 != 0)
+                {
+                    rlo = 0 - rlo;
+                    rhi = 0 - rhi - (rlo != 0 ? 1ul : 0ul);
+                    sign ^= 1;
+                }
+
+                nonzero = rhi != 0;
+            }
+
+            if (nonzero)
+            {
+                e += 64;
+                d = Polyfill.LeadingZeroCount(rhi) - 1;
+                rhi = rhi << d | rlo >> -d | (rlo << d != 0 ? 1ul : 0ul);
+            }
+            else if (rlo != 0)
+            {
+                d = Polyfill.LeadingZeroCount(rlo) - 1;
+                if (d < 0)
+                {
+                    rhi = rlo >> 1 | (rlo & 1);
+                }
+                else
+                {
+                    rhi = rlo << d;
+                }
+            }
+            else
+            {
+                return x * y + z;
+            }
+            e -= d;
+
+            long i = (long)rhi;
+            if (sign != 0)
+            {
+                i = -i;
+            }
+
+            double r = i;
+
+            if (e < -1022 - 62)
+            {
+                if (e == -1022 - 63)
+                {
+                    double c = 9223372036854775808.0;
+
+                    if (sign != 0)
+                    {
+                        c = -c;
+                    }
+                    if (r == c)
+                    {
+                        float fltmin = (float)(1.08420214017376175615e-19 * 1.17549435082228750797e-38 * r);
+                        return 2.22507385850720138309e-308 / 1.17549435082228750797e-38 * fltmin;
+                    }
+
+                    if (rhi << 53 != 0)
+                    {
+                        i = (long)(rhi >> 1 | (rhi & 1) | 1ul << 62);
+                        if (sign != 0)
+                        {
+                            i = -i;
+                        }
+                        r = i;
+                        r = 2 * r - c;
+
+                        // nop?
+                    }
+                }
+                else
+                {
+                    d = 10;
+                    i = (long)((rhi >> d | (rhi << -d != 0 ? 1ul : 0ul)) << d);
+                    if (sign != 0)
+                    {
+                        i = -i;
+                    }
+                    r = i;
+                }
+            }
+            double result = Ldexp(r, e);
+            return result;
+        }
+
+
+        //*
         // https://hal.science/hal-04575249/document
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -45,190 +246,83 @@ public static partial class StrictMath
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double l, double h) twoSum(double a, double b)
+        static (double h, double l) twoSum(double a, double b)
         {
             double h = a + b;
             double aprime = h - b;
             double l = (a - aprime) + (b - (h - aprime));
-            return (l, h);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double l, double h) split(double x)
-        {
-            double k = 134217729.0;
-            double gamma = k * x;
-            double h = gamma + (x - gamma);
-            double l = x - h;
-            return (l, h);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double l, double h) dekkerProd(double a, double b)
-        {
-            (double al, double ah) = split(a);
-            (double bl, double bh) = split(b);
-
-            double h = a * b;
-            double l = (((-h + ah * bh) + (ah * bl)) + al * bh) + al * bl;
-            return (l, h);
-        }
-
-
-        double xl, xh, sl, sh, vl, vh;
-        (xl, xh) = dekkerProd(x, y);
-        (sl, sh) = twoSum(xh, z);
-        (vl, vh) = twoSum(xl, sl);
-
-        if (!double.IsFinite(sh) || !double.IsFinite(xl))
-        {
-            if (double.IsFinite(x) && double.IsFinite(y) && !double.IsFinite(z))
-            {
-                return z;
-            }
-            return sh;
-        }
-
-        if (isNot1Or3TimesPowerOf2(vh) || vl == 0.0)
-        {
-            return sh + vh;
-        }
-        if ((vl < 0.0) ^ (vh < 0.0))
-        {
-            return sh + (0.875 * vh);
-        }
-        return sh + (1.125 * vh);
-        //*/
-
-
-
-        // https://drilian.com/posts/2025.01.02-emulating-the-fmadd-instruction-part-2-64-bit-floats/
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static double ZeroBottom27BitsOfMantissa(double x)
-        {
-            return Polyfill.UInt64BitsToDouble(Polyfill.DoubleToUInt64Bits(x) & ~0x7ff_fffful);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double h, double l) Split(double v)
-        {
-            double h = ZeroBottom27BitsOfMantissa(v);
-            double l = v - h;
             return (h, l);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double prod, double err) MulWithError(double x, double y)
+        static (double h, double l) split(double x)
         {
-            double prod = x * y;
-
-            var (xh, xl) = Split(x);
-            var (yh, yl) = Split(y);
-            double err = (((xh * yh - prod) + xh * yl) + xl * yh) + xl * yl;
-            return (prod, err);
+            const double k = 134217729.0;
+            double gamma = k * x;
+            double h = gamma + (x - gamma);
+            double l = x - h;
+            return (h, l);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double sum, double err) AddwithError(double x, double y)
+        static (double h, double l) dekkerProd(double a, double b)
         {
-            double sum = x + y;
-            double intermediate = sum - x;
-            double err1 = y - intermediate;
-            double err2 = x - (sum - intermediate);
-            return (sum, err1 + err2);
+            (double ah, double al) = split(a);
+            (double bh, double bl) = split(b);
+
+            double h = a * b;
+            double l = (((-h + ah * bh) + (ah * bl)) + al * bh) + al * bl;
+            return (h, l);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static double RoundToOdd(double value, double errorTerm)
-        {
-            ulong bits = Polyfill.DoubleToUInt64Bits(value);
 
-            if (errorTerm != 0.0 && (bits & 1) == 0)
+        static double FastEmulation(double x, double y, double z)
+        {
+            double xl, xh, sl, sh, vl, vh;
+            (xh, xl) = dekkerProd(x, y);
+
+            if (!double.IsNormal(xh))
             {
-                if (errorTerm > 0.0)
+                return double.NaN;
+            }
+
+            (sh, sl) = twoSum(xh, z);
+            (vh, vl) = twoSum(xl, sl);
+
+            if (!double.IsNormal(vh))
+            {
+                return double.NaN;
+            }
+
+            if (!double.IsFinite(sh) || !double.IsFinite(xl))
+            {
+                if (double.IsFinite(x) && double.IsFinite(y) && !double.IsFinite(z))
                 {
-                    bits++;
+                    return z;
                 }
-                else
-                {
-                    bits--;
-                }
+                return sh;
             }
 
-            return Polyfill.UInt64BitsToDouble(bits);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static double OddRoundedAdd(double x, double y)
-        {
-            var (sum, err) = AddwithError(x, y);
-            return RoundToOdd(sum, err);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static double Pow2(int exponent)
-        {
-            return Polyfill.UInt64BitsToDouble((ulong)(exponent + 1023) << 52);
-        }
-
-
-        double AvoidSubnormalBias = Pow2(110);
-        double bias = 1.0;
-        {
-            double testResult = Abs(x * y + z);
-            if (testResult < Pow2(-500) && Math.Max(Math.Max(x, y), z) < Pow2(800))
+            if (isNot1Or3TimesPowerOf2(vh) || vl == 0.0)
             {
-                bias = AvoidSubnormalBias;
+                return sh + vh;
             }
-            else if (double.IsInfinity(testResult))
+            if ((vl < 0.0) ^ (vh < 0.0))
             {
-                bias = Pow2(-55);
+                return sh + (0.875 * vh);
             }
+            return sh + (1.125 * vh);
         }
+        //*/
 
-        (double ab, double abErr) = MulWithError(x * bias, y);
-        (double abc, double abcErr) = AddwithError(ab, z * bias);
 
-        if (!double.IsFinite(abc))
+
+        double fastPath = FastEmulation(x, y, z);
+        if (!double.IsNaN(fastPath))
         {
-            if (double.IsInfinity(z) && double.IsFinite(x) && double.IsFinite(y))
-            {
-                return z;
-            }
-
-            return x * y + z;
+            return fastPath;
         }
 
-        double err = OddRoundedAdd(abErr, abcErr);
-
-        double SubnormThreshold = Pow2(-1022);
-
-        if (bias == AvoidSubnormalBias && Abs(abc) < SubnormThreshold)
-        {
-            (double finalSum, double finalSumErr) = AddwithError(abc, err);
-
-            double OneBitSubnormalThreshold = SubnormThreshold * 0.5;
-
-            if (Abs(finalSum) >= OneBitSubnormalThreshold)
-            {
-                var (rh, rl) = Split(finalSum);
-
-                rl = OddRoundedAdd(rl, finalSumErr);
-
-                rh /= bias;
-                rl /= bias;
-                return rh + rl;
-            }
-            else
-            {
-                finalSum = RoundToOdd(finalSum, finalSumErr);
-                return finalSum / bias;
-            }
-        }
-        else
-        {
-            return (abc + err) / bias;
-        }
+        return Fallback(x, y, z);
     }
 }

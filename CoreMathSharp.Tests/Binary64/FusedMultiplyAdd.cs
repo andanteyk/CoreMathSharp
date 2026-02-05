@@ -26,6 +26,15 @@ public class FusedMultiplyAdd
 
         for (int i = 0; i < 1024 * 1024; i++)
         {
+            double x = rng.NextSignedDouble();
+            double y = rng.NextSignedDouble();
+            double z = rng.NextSignedDouble();
+
+            Assert.Equal(Math.FusedMultiplyAdd(x, y, z), StrictMath.FusedMultiplyAdd(x, y, z));
+        }
+
+        for (int i = 0; i < 1024 * 1024; i++)
+        {
             double x = Polyfill.UInt64BitsToDouble(rng.Next());
             double y = Polyfill.UInt64BitsToDouble(rng.Next());
             double z = Polyfill.UInt64BitsToDouble(rng.Next());
@@ -33,11 +42,12 @@ public class FusedMultiplyAdd
             Assert.Equal(Math.FusedMultiplyAdd(x, y, z), StrictMath.FusedMultiplyAdd(x, y, z));
         }
 
-        for (int i = 0; i < 1024 * 1024; i++)
+        // subnormals
+        for (int i = 0; i < 1024; i++)
         {
-            double x = rng.NextSignedDouble();
-            double y = rng.NextSignedDouble();
-            double z = rng.NextSignedDouble();
+            double x = Polyfill.UInt64BitsToDouble(rng.Next() & ~0x7ff0000000000000ul);
+            double y = Polyfill.UInt64BitsToDouble(rng.Next() & ~0x7ff0000000000000ul);
+            double z = Polyfill.UInt64BitsToDouble(rng.Next() & ~0x7ff0000000000000ul);
 
             Assert.Equal(Math.FusedMultiplyAdd(x, y, z), StrictMath.FusedMultiplyAdd(x, y, z));
         }

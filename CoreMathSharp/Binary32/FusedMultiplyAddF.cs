@@ -11,6 +11,7 @@ namespace CoreMathSharp;
 public static partial class StrictMathF
 {
     /// <inheritdoc cref="StrictMath.FusedMultiplyAdd(double, double, double)"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float FusedMultiplyAdd(float x, float y, float z)
     {
 #if NETCOREAPP3_0_OR_GREATER
@@ -28,7 +29,6 @@ public static partial class StrictMathF
 
         /*
         // https://hal.science/hal-04575249/document
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static bool isNot1Or3TimesPowerOf2(float x)
         {
@@ -37,99 +37,126 @@ public static partial class StrictMathF
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (float l, float h) twoSum(float a, float b)
+        static (float h, float l) twoSum(float a, float b)
         {
             float h = a + b;
             float aprime = h - b;
             float l = (a - aprime) + (b - (h - aprime));
-            return (l, h);
+            return (h, l);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (float l, float h) split(float x)
+        static (float h, float l) split(float x)
         {
             float k = 4097.0f;
             float gamma = k * x;
             float h = gamma + (x - gamma);
             float l = x - h;
-            return (l, h);
+            return (h, l);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (float l, float h) dekkerProd(float a, float b)
+        static (float h, float l) dekkerProd(float a, float b)
         {
-            (float al, float ah) = split(a);
-            (float bl, float bh) = split(b);
+            (float ah, float al) = split(a);
+            (float bh, float bl) = split(b);
 
             float h = a * b;
             float l = (((-h + ah * bh) + (ah * bl)) + al * bh) + al * bl;
-            return (l, h);
+            return (h, l);
         }
 
 
-        float xl, xh, sl, sh, vl, vh;
-        (xl, xh) = dekkerProd(x, y);
-        (sl, sh) = twoSum(xh, z);
-        (vl, vh) = twoSum(xl, sl);
-
-        if (!float.IsFinite(sh) || !float.IsFinite(xl))
+        static float FastEmulation(float x, float y, float z)
         {
-            if (float.IsFinite(x) && float.IsFinite(y) && !float.IsFinite(z))
+            float xl, xh, sl, sh, vl, vh;
+            (xh, xl) = dekkerProd(x, y);
+
+            if (!float.IsNormal(xh))
             {
-                return z;
+                return float.NaN;
             }
-            return sh;
-        }
 
-        if (isNot1Or3TimesPowerOf2(vh) || vl == 0.0f)
-        {
-            return sh + vh;
+            (sh, sl) = twoSum(xh, z);
+            (vh, vl) = twoSum(xl, sl);
+
+            if (!float.IsNormal(vh))
+            {
+                return float.NaN;
+            }
+
+            if (!float.IsFinite(sh) || !float.IsFinite(xl))
+            {
+                if (float.IsFinite(x) && float.IsFinite(y) && !float.IsFinite(z))
+                {
+                    return z;
+                }
+                return sh;
+            }
+
+            if (isNot1Or3TimesPowerOf2(vh) || vl == 0.0f)
+            {
+                return sh + vh;
+            }
+            if ((vl < 0.0f) ^ (vh < 0.0f))
+            {
+                return sh + (0.875f * vh);
+            }
+            return sh + (1.125f * vh);
         }
-        if ((vl < 0.0f) ^ (vh < 0.0f))
-        {
-            return sh + (0.875f * vh);
-        }
-        return sh + (1.125f * vh);
         //*/
 
 
 
-
-        // https://drilian.com/posts/2025.01.02-emulating-the-fmadd-instruction-part-2-64-bit-floats/
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static (double sum, double err) AddwithError(double x, double y)
+        // https://git.musl-libc.org/cgit/musl/tree/src/math/fmaf.c
+        static float Fallback(float x, float y, float z)
         {
-            double sum = x + y;
-            double intermediate = sum - x;
-            double err1 = y - intermediate;
-            double err2 = x - (sum - intermediate);
-            return (sum, err1 + err2);
-        }
+            double xy, result;
+            int e;
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static double RoundToOdd(double value, double errorTerm)
-        {
-            ulong bits = Polyfill.DoubleToUInt64Bits(value);
+            xy = (double)x * y;
+            result = xy + z;
 
-            if (errorTerm != 0.0 && (bits & 1) == 0)
+            ulong u = Polyfill.DoubleToUInt64Bits(result);
+            e = (int)(u >> 52) & 0x7ff;
+
+            if ((u & 0x1fffffff) != 0x10000000 || e == 0x7ff || (result - xy == z && result - z == xy))
             {
-                if (errorTerm > 0.0)
-                {
-                    bits++;
-                }
-                else
-                {
-                    bits--;
-                }
+                return (float)result;
             }
 
-            return Polyfill.UInt64BitsToDouble(bits);
+            double err;
+            int neg = (int)(u >> 63);
+            if (neg == (z > xy ? 1 : 0))
+            {
+                err = xy - result + z;
+            }
+            else
+            {
+                err = z - result + xy;
+            }
+
+            if (neg == (err < 0 ? 1 : 0))
+            {
+                u++;
+            }
+            else
+            {
+                u--;
+            }
+
+            return (float)Polyfill.UInt64BitsToDouble(u);
         }
 
-        double product = (double)x * (double)y;
-        (double sum, double err) = AddwithError(product, z);
-        sum = RoundToOdd(sum, err);
-        return (float)sum;
+
+        /*
+        // not so fast (about 3x slower)
+        float fastPath = FastEmulation(x, y, z);
+        if (!float.IsNaN(fastPath))
+        {
+            return fastPath;
+        }
+        //*/
+        return Fallback(x, y, z);
     }
 }
