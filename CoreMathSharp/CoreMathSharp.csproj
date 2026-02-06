@@ -7,7 +7,7 @@
     <PackageId>AndanteSoft.CoreMathSharp</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
     <Authors>Andante</Authors>
-    <Description></Description>
+    <Description>Perfectly accurate, portable, and deterministic implementations of mathematical functions</Description>
     <Copyright>Copyright (c) Andante 2026</Copyright>
     <PackageProjectUrl>https://github.com/andanteyk/CoreMathSharp</PackageProjectUrl>
     <PackageIcon>CoreMathSharp.png</PackageIcon>
