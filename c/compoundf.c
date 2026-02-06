@@ -24,6 +24,14 @@ void printCompoundf()
 
         printf("%08" PRIx32 "\t%08" PRIx32 "\t%08" PRIx32 "\n", toUint32(x), toUint32(y), toUint32(cr_compoundf(x, y)));
     }
+
+    for (int i = 0; i < ITERATION_LENGTH; i++)
+    {
+        float x = toFloat(next());
+        float y = toFloat(next());
+
+        printf("%08" PRIx32 "\t%08" PRIx32 "\t%08" PRIx32 "\n", toUint32(x), toUint32(y), toUint32(cr_compoundf(x, y)));
+    }
 }
 
 int main(void)

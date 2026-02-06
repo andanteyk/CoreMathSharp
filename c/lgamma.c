@@ -9,6 +9,10 @@ extern int signgam;
 
 const static uint64_t errorVectors[] = {
     0xc021b649eb4316fb,
+    0x3fabaa6c93c5a8d3,
+    0xfeaea98000000000,
+    0xc021b649eb4316fb,
+    0xc01808d3e2f56b4f,
     0};
 
 void printLgamma()

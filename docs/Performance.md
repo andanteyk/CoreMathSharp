@@ -377,10 +377,10 @@ High is considered to be a large overhead in order to obtain deterministic resul
 It also showed that simply applying `[BurstCompile]` does not necessarily make the program faster.  
 This is likely because it makes little use of SIMD operations, where Burst's true value can be realized.
 
-From what I measured, the only visible difference between Low and Medium was Pow; everything else was almost the same.  
+From what I measured, the only visible difference between Low and Medium was `Pow`; everything else was almost the same.  
 Considering the risk to accuracy, the benefits of using Low are likely smaller than the disadvantages.
 
-Furthermore, if you utilize Burst Intrinsics in Unity, you can use fma and clz, for example, which is likely to make things even faster.　　
+Furthermore, if you utilize Burst Intrinsics in Unity, you can use `fma` and `clz`, for example, which is likely to make things even faster.　　
 However, since this is an implementation specific to Burst, the implementation cost is very high, and as will be described later, it is thought that using a native library would be faster, so this is difficult.
 
 ###### vs. P/Invoke

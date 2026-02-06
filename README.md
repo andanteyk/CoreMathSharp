@@ -203,11 +203,6 @@ I would like to take this opportunity to express my gratitude.
 
 ## TODO
 
-* Benchmarking
-    * Managed (vs. `Math(F)`)
-    * IL2CPP (vs. `Mathf` or `Unity.Mathematics`)
-    * vs. BurstCompile
-    * Compare with P/Invoke
 * More accurate testing
     * measure code coverage
 * Fix math-dependent functions
