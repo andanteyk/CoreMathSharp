@@ -58,9 +58,9 @@ For example, [`Math.Sin`](https://learn.microsoft.com/en-us/dotnet/api/system.ma
 
 [The help](https://learn.microsoft.com/en-us/cpp/c-runtime-library/floating-point-support?view=msvc-170) for the "underlying C runtime" says:
 
-> The floating-point functions are implemented to balance performance with correctness. Because producing the correctly rounded result may be prohibitively expensive, these functions are designed to efficiently **produce a close approximation to the correctly rounded result.** In most cases, **the result produced is within +/-1 ULP** (unit of least precision) of the correctly rounded result, though there may be cases where there's greater inaccuracy.
-> ...
-> Many of the floating-point math library functions have different implementations for different CPU architectures. 
+> The floating-point functions are implemented to balance performance with correctness. Because producing the correctly rounded result may be prohibitively expensive, these functions are designed to efficiently **produce a close approximation to the correctly rounded result.** In most cases, **the result produced is within +/-1 ULP** (unit of least precision) of the correctly rounded result, though there may be cases where there's greater inaccuracy.  
+> ...  
+> Many of the floating-point math library functions have different implementations for different CPU architectures.   
 
 Also, for example, Unity's [`Mathf.Sin`](https://docs.unity3d.com/ScriptReference/Mathf.Sin.html) has some (slightly scary) note:
 
@@ -72,9 +72,9 @@ This information tells us:
 * It is environment-dependent, which is **problematic for terrain generation and replay in games** and for reproducibility in scientific papers.
 * Not portable. It is heavily dependent on specific platforms (CRT, libm, etc.) and cannot be perfectly consistent across different platforms.
 
-But what if there was a "perfect" mathematical function?
-Perfection - accurate down to the last bit - necessarily means that the same value would be obtained in any environment.
-Therefore, perfect accuracy brings benefits beyond just accuracy.
+But what if there was a "perfect" mathematical function?  
+Perfection - accurate down to the last bit - necessarily means that the same value would be obtained in any environment.  
+Therefore, perfect accuracy brings benefits beyond just accuracy.  
 
 ### Functions
 
@@ -133,16 +133,18 @@ The following functions are available:
 
 ### Performance
 
-See [docs/Performance.md](docs/Performance.md).
+The CoreMathSharp implementation also emphasizes speed, achieving speeds comparable to the standard library despite its high accuracy.
+
+For details, see [docs/Performance.md](docs/Performance.md).
 
 ## Notes
 
 In a 32-bit environment (where the x87 FPU is used because SSE2 cannot be used for calculations), correct results may not be obtained.
 This is unavoidable due to the [C# specifications](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/types#837-floating-point-types), so it cannot be supported.
 
-> Floating-point operations may be performed with higher precision than the result type of the operation. 
-> ...
-> Some hardware architectures support an “extended” or “long double” floating-point type with greater range and precision than the `double` type, and implicitly perform all floating-point operations using this higher precision type.
+> Floating-point operations may be performed with higher precision than the result type of the operation.   
+> ...  
+> Some hardware architectures support an “extended” or “long double” floating-point type with greater range and precision than the `double` type, and implicitly perform all floating-point operations using this higher precision type.  
 
 ## Fork
 
@@ -158,10 +160,10 @@ dotnet build
 dotnet test
 ```
 
-The tests performed in `.net8.0` exist for testing DLLs for `netstandard2.1` .
+The tests performed in `.net8.0` exist for testing DLLs for `netstandard2.1` .  
 (This is because the minimum requirement for xUnit is .net8.0.)
 
-To generate test vectors (such as `acosf.txt`), see `c/***.c`.
+To generate test vectors (such as `acosf.txt`), see `c/***.c`.  
 An environment where clang can run (WSL is recommended) is required.
 
 ### Run Benchmarks
@@ -178,7 +180,7 @@ dotnet run -c Release --project CoreMathSharp.Benchmarks -f net10.0
 1. Open Window -> General -> Test Runner / Performance Test Report.
 1. In Test Runner, change to `PlayMode` (Mono) or `Player` (IL2CPP), then press `Run All`.
 
-The DLL (`Assets/Plugins/x86_64/CoreMathPInvoke.dll`) is built for Windows x64.
+The DLL (`Assets/Plugins/x86_64/CoreMathPInvoke.dll`) is built for Windows x64.  
 If you want to run it in a different environment:
 
 1. Open `c/CoreMathPInvoke.slnx` with Visual Studio 2026 (needs Clang support)
@@ -196,7 +198,7 @@ dotnet pack
 
 [MIT License](LICENSE)
 
-The implementation of CoreMathSharp is a port of the implementation in [THE CORE-MATH project](https://core-math.gitlabpages.inria.fr/).
+The implementation of CoreMathSharp is a port of the implementation in [THE CORE-MATH project](https://core-math.gitlabpages.inria.fr/).  
 I would like to take this opportunity to express my gratitude.
 
 ## TODO
