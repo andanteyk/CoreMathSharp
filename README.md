@@ -27,7 +27,7 @@ CoreMathSharp can be installed from NuGet `AndanteSoft.CoreMathSharp`.
 dotnet add package AndanteSoft.CoreMathSharp
 ```
 
-CoreMathSharp requires **.NET Standard 2.1** or **.NET 10.**
+CoreMathSharp requires **.NET Standard 2.1** or **.NET 10.**  
 All functions are available in both, but the .NET 10 version is recommended as it runs faster.
 
 ### Installing on Unity
@@ -200,10 +200,3 @@ dotnet pack
 
 The implementation of CoreMathSharp is a port of the implementation in [THE CORE-MATH project](https://core-math.gitlabpages.inria.fr/).  
 I would like to take this opportunity to express my gratitude.
-
-## TODO
-
-* More accurate testing
-    * measure code coverage
-* Fix math-dependent functions
-
